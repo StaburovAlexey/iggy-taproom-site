@@ -12,9 +12,18 @@ export function createScene(container, models) {
     resolveFirstFrame = resolve;
   });
 
-  const renderer = new THREE.WebGLRenderer({ antialias: true });
-  renderer.setPixelRatio(window.devicePixelRatio || 1);
-  renderer.setSize(container.clientWidth, container.clientHeight);
+  const renderer = new THREE.WebGLRenderer({ antialias: false });
+  renderer.setPixelRatio(1);
+  const renderScale = 0.55;
+  function setRendererSize() {
+    const width = Math.max(1, Math.floor(container.clientWidth * renderScale));
+    const height = Math.max(1, Math.floor(container.clientHeight * renderScale));
+    renderer.setSize(width, height, false);
+    renderer.domElement.style.width = `${container.clientWidth}px`;
+    renderer.domElement.style.height = `${container.clientHeight}px`;
+    renderer.domElement.style.imageRendering = 'pixelated';
+  }
+  setRendererSize();
   renderer.shadowMap.enabled = true;
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -91,12 +100,12 @@ export function createScene(container, models) {
   scene.add(bar);
 
   const camera = new THREE.PerspectiveCamera(
-    85,
+    40,
     container.clientWidth / container.clientHeight,
     0.1,
     50,
   );
-  camera.position.set(-1, 2, 5);
+  camera.position.set(-1, 2, 6);
   camera.lookAt(target);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.copy(target);
@@ -114,7 +123,7 @@ export function createScene(container, models) {
     const height = container.clientHeight;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
-    renderer.setSize(width, height);
+    setRendererSize();
   }
 
   window.addEventListener('resize', () => onResize());

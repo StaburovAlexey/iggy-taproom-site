@@ -1,0 +1,39 @@
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Fira Sans', 'Segoe UI', sans-serif;
+  background: radial-gradient(
+    circle at 20% 10%,
+    #1b1f2a,
+    #0e0f14 55%,
+    #0a0b10 100%
+  );
+  color: #e7e7ea;
+  overflow: hidden;
+}
+
+canvas {
+  display: block;
+}
+
+menu-panel {
+  position: fixed;
+  inset: 24px 24px auto auto;
+  z-index: 10;
+}
+
+.stats {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 10;
+}

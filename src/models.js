@@ -5,7 +5,7 @@ const material = new THREE.MeshBasicMaterial({});
 export function loadBar() {
   return new Promise((resolve, reject) => {
     loaderGLB.load(
-      '/model/BAR-lights.glb',
+      '/model/BAR.glb',
       async (gltf) => {
         const bar = gltf.scene;
         const lampBar = [];

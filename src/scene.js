@@ -3,10 +3,10 @@ import GUI from 'lil-gui';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
-const target = new THREE.Vector3(0, 1, 0);
+const target = new THREE.Vector3(-5, 1, 0);
 
 export function createScene(container, models) {
-  const { bar, lampBar } = models;
+  const { bar, lampBar, lampDj, lampTable, lampCenter } = models;
   let resolveFirstFrame;
   const firstFrame = new Promise((resolve) => {
     resolveFirstFrame = resolve;
@@ -16,8 +16,8 @@ export function createScene(container, models) {
   renderer.setPixelRatio(window.devicePixelRatio || 1);
   renderer.setSize(container.clientWidth, container.clientHeight);
   renderer.shadowMap.enabled = true;
-  
- 
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
   container.appendChild(renderer.domElement);
 
   const scene = new THREE.Scene();
@@ -25,15 +25,52 @@ export function createScene(container, models) {
   lampBar.forEach((item) => {
     const { x, y, z } = item.position;
     let pointlight;
-
-    pointlight = new THREE.PointLight(0xffffff, 1, 4);
+    pointlight = new THREE.PointLight(0xffd2a1, 1, 12);
     // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
-    pointlight.position.set(x, y - 0.9, z);
+    pointlight.position.set(x, y - 1.5, z);
     pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
     // scene.add(pointLightHelper);
     scene.add(pointlight);
   });
+
+  lampDj.forEach((item) => {
+    const { x, y, z } = item.position;
+    let pointlight;
+    pointlight = new THREE.PointLight(0xffd2a1, 0.8, 3.5);
+    // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
+    pointlight.position.set(x, y - 1.6, z);
+    pointlight.castShadow = true;
+    pointlight.shadow.mapSize.set(256, 256);
+
+    // scene.add(pointLightHelper);
+    scene.add(pointlight);
+  });
+  lampTable.forEach((item) => {
+    const { x, y, z } = item.position;
+    let pointlight;
+    pointlight = new THREE.PointLight(0xffd2a1, 0.5, 3);
+    // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
+    pointlight.position.set(x, y - 1.9, z + 0.7);
+    pointlight.castShadow = true;
+    pointlight.shadow.mapSize.set(256, 256);
+
+    // scene.add(pointLightHelper);
+    scene.add(pointlight);
+  });
+  lampCenter.forEach((item) => {
+    const { x, y, z } = item.position;
+    let pointlight;
+    pointlight = new THREE.PointLight(0xffd2a1, 0.4, 3);
+    // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
+    pointlight.position.set(x, y - 1.9, z);
+    pointlight.castShadow = true;
+    pointlight.shadow.mapSize.set(256, 256);
+
+    // scene.add(pointLightHelper);
+    scene.add(pointlight);
+  });
+
   const sunLight = new THREE.DirectionalLight(0xfff2d1, 1.5);
   // const sunLightHelper = new THREE.DirectionalLightHelper(sunLight, 0.2);
   sunLight.position.set(3.3, 5.3, -9.5);
@@ -45,7 +82,7 @@ export function createScene(container, models) {
   sunLight.shadow.camera.right = 10;
   sunLight.shadow.camera.bottom = -6;
   sunLight.shadow.camera.left = -10;
-  scene.add(sunLight);
+  // scene.add(sunLight);
   // scene.add(sunLightHelper);
   // const directionalLightCameraHelper = new THREE.CameraHelper(
   //   sunLight.shadow.camera,
@@ -59,7 +96,7 @@ export function createScene(container, models) {
     0.1,
     50,
   );
-  camera.position.set(0, 3, 4);
+  camera.position.set(-1, 2, 5);
   camera.lookAt(target);
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.copy(target);

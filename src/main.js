@@ -11,6 +11,6 @@ const preloader = document.createElement('app-preloader');
 document.body.appendChild(preloader);
 
 await loadingDone;
-const {bar,lampBar} = await loadBar()
-createScene(app, { bar, lampBar });
+const models = await loadBar()
+createScene(app, models);
 preloader.hide();

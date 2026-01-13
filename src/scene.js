@@ -5,6 +5,11 @@ import Stats from 'stats.js';
 const target = new THREE.Vector3(0, 1, 0);
 
 export function createScene(container) {
+  let resolveFirstFrame
+  const firstFrame = new Promise((resolve) => {
+    resolveFirstFrame = resolve
+  })
+
   const renderer = new THREE.WebGLRenderer({ antialias: true });
   renderer.setPixelRatio(window.devicePixelRatio || 1);
   renderer.setSize(container.clientWidth, container.clientHeight);
@@ -44,9 +49,15 @@ export function createScene(container) {
     const delta = clock.getDelta();
 
     renderer.render(scene, camera);
+    if (resolveFirstFrame) {
+      resolveFirstFrame()
+      resolveFirstFrame = null
+    }
     stats.end();
     requestAnimationFrame(animate);
   }
 
   animate();
+
+  return { firstFrame }
 }

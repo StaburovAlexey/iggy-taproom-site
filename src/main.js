@@ -13,7 +13,7 @@ document.body.appendChild(preloader);
 
 await loadingDone;
 const models = await loadBar()
-applyLowPoly(models.bar, .01, 500);
+applyLowPoly(models.bar, 0.01, 1500);
 applyPS1Style(models.bar);
 createScene(app, models);
 preloader.hide();

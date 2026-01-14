@@ -12,7 +12,9 @@ export const texturePaths = {
   wood_planks_nor_gl_1k: '/textures/wood_planks_1k/wood_planks_nor_gl_1k.jpg',
   rough_wood_diff_1k: '/textures/rough_wood_1k/rough_wood_diff_1k.jpg',
   wood_shutter_1k: '/textures/wood_shutter_1k/wood_shutter_diff_1k.jpg',
-  rust_coarse_01_1k: '/textures/rust_coarse_01_1k/rust_coarse_01_diff_1k.jpg'
+  rust_coarse_01_1k: '/textures/rust_coarse_01_1k/rust_coarse_01_diff_1k.jpg',
+  cup_texture: '/textures/cup_texture.png',
+  beer_texture: '/textures/beer_texture.png'
 };
 
 export function loadTexture(path) {

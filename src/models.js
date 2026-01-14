@@ -47,6 +47,8 @@ export function loadBar() {
           rough_wood_diff_1k,
           wood_shutter_1k,
           rust_coarse_01_1k,
+          cup_texture,
+          beer_texture,
         } = textures;
         bar.traverse((child) => {
           if (child.isMesh) {
@@ -398,7 +400,7 @@ export function loadBar() {
             taproom.material.emissive = new THREE.Color('#ff2f6f');
             taproom.material.emissiveIntensity = 2.2;
             taproom.material.needsUpdate = true;
-            console.log(taproom);
+
             signLights.push({
               position: { x: -3.7, y: 2.4, z: 4 },
               color: 0x7fd6ff,
@@ -411,6 +413,54 @@ export function loadBar() {
               intensity: 1,
               distance: 3,
             });
+          }
+          if (child.name === 'кофемашина') {
+            const main = child.children[0];
+            const glass = child.children[2];
+            const plastic = child.children[1];
+            main.material = new THREE.MeshStandardMaterial({
+              color: '#8498a1',
+            });
+            glass.material = new THREE.MeshStandardMaterial({
+              color: '#8783b4',
+            });
+            plastic.material = new THREE.MeshStandardMaterial({
+              color: '#202020',
+            });
+          }
+          if (child.name.includes('бокалы')) {
+            const material = new THREE.MeshStandardMaterial({
+              transparent: true,
+              map: cup_texture,
+              alphaTest: 0.5,
+              side: THREE.DoubleSide,
+            });
+            material.map.repeat.set(2, 1);
+            material.map.wrapS = THREE.RepeatWrapping;
+            material.map.wrapT = THREE.RepeatWrapping;
+            material.map.colorSpace = THREE.SRGBColorSpace;
+            material.map.rotation = Math.PI * -0.5;
+            child.material = material;
+            child.position.y = child.position.y - 0.05;
+          }
+          if (child.name.includes('пиво')) {
+            beer_texture.center.set(0.5, 0.5);
+            const material = new THREE.MeshStandardMaterial({
+              transparent: true,
+              alphaTest: 0.5,
+              map: beer_texture,
+              side: THREE.DoubleSide,
+            });
+
+            material.map.repeat.set(1, 1);
+            material.map.wrapS = THREE.ClampToEdgeWrapping;
+            material.map.wrapT = THREE.ClampToEdgeWrapping;
+            material.map.colorSpace = THREE.SRGBColorSpace;
+            material.map.rotation = Math.PI * -0.5;
+            child.material = material;
+            child.position.y = child.position.y - 0.03;
+            child.scale.set(0.5, 0.2, 0.5);
+            child.receiveShadow = false;
           }
         });
 

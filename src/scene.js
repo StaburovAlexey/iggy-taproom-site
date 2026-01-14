@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import GUI from 'lil-gui';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { createCameraFlight } from './cameraFlight.js';
 
 const target = new THREE.Vector3(-5, 1, 0);
 
@@ -38,8 +39,9 @@ export function createScene(container, models) {
     const { x, y, z } = item.position;
     let pointlight;
     pointlight = new THREE.PointLight(0xffd2a1, 1, 5);
-    pointlight.position.set(x, y - 1.5, z);
+    pointlight.position.set(x, y - 1.7, z);
     pointlight.shadow.mapSize.set(256, 256);
+    pointlight.castShadow = true;
     scene.add(pointlight);
   });
 
@@ -49,7 +51,7 @@ export function createScene(container, models) {
     pointlight = new THREE.PointLight(0xffd2a1, 0.8, 3.5);
     pointlight.position.set(x, y - 1.6, z);
     pointlight.shadow.mapSize.set(256, 256);
-
+    pointlight.castShadow = true;
     scene.add(pointlight);
   });
   lampTable.forEach((item) => {
@@ -58,7 +60,7 @@ export function createScene(container, models) {
     pointlight = new THREE.PointLight(0xffd2a1, 0.4, 5);
     pointlight.position.set(x, y - 2.2, z + 0.2);
     pointlight.shadow.mapSize.set(256, 256);
-
+ 
     scene.add(pointlight);
   });
   lampCenter.forEach((item) => {
@@ -133,7 +135,7 @@ export function createScene(container, models) {
     0.55,
     0.6,
   );
-   spotLight6.position.set(3.5, 3.2, 3.3);
+  spotLight6.position.set(3.5, 3.2, 3.3);
   spotLight6.target.position.x = 3.7;
   spotLight6.target.position.y = 1.1;
   spotLight6.target.position.z = 2.5;
@@ -187,6 +189,7 @@ export function createScene(container, models) {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.target.copy(target);
   controls.update();
+  controls.enabled = true;
 
   const clock = new THREE.Clock();
   const stats = new Stats();
@@ -194,6 +197,7 @@ export function createScene(container, models) {
   container.appendChild(stats.dom);
 
   const gui = new GUI({ width: 240 });
+  const updateCameraFlight = createCameraFlight(camera, clock);
 
   function onResize() {
     const width = container.clientWidth;
@@ -207,7 +211,8 @@ export function createScene(container, models) {
 
   function animate() {
     stats.begin();
-    const delta = clock.getDelta();
+    clock.getDelta();
+    updateCameraFlight();
 
     renderer.render(scene, camera);
     if (resolveFirstFrame) {

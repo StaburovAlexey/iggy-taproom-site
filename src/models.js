@@ -128,7 +128,7 @@ export function loadBar() {
             child.material.map.colorSpace = THREE.SRGBColorSpace;
           }
           if (child?.material?.name === 'дерево') {
-            child.material = child.material.clone();
+            child.material = new THREE.MeshStandardMaterial();
             child.material.map = wood_table_diff;
             child.material.map.repeat.set(1, 2);
             child.material.map.wrapS = THREE.RepeatWrapping;
@@ -136,8 +136,10 @@ export function loadBar() {
             child.material.map.colorSpace = THREE.SRGBColorSpace;
             child.material.roughness = 0.8;
             child.material.metalness = 0.1;
-            child.castShadow = false;
+            child.castShadow = true;
             child.receiveShadow = true;
+            // child.material.shadowSide = THREE.DoubleSide;
+            // child.material.side = THREE.DoubleSide;
             child.material.needsUpdate = true;
           }
           if (child?.name === 'окно_рама') {
@@ -396,15 +398,15 @@ export function loadBar() {
             taproom.material.emissive = new THREE.Color('#ff2f6f');
             taproom.material.emissiveIntensity = 2.2;
             taproom.material.needsUpdate = true;
-            console.log(taproom)
+            console.log(taproom);
             signLights.push({
-              position: {x:-3.7,y:2.4,z:4,},
+              position: { x: -3.7, y: 2.4, z: 4 },
               color: 0x7fd6ff,
               intensity: 1,
               distance: 3,
             });
             signLights.push({
-              position: {x:-3.7,y:1.7,z:4,},
+              position: { x: -3.7, y: 1.7, z: 4 },
               color: 0xff6aa3,
               intensity: 1,
               distance: 3,
@@ -422,4 +424,3 @@ export function loadBar() {
     );
   });
 }
-

@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { SimplifyModifier } from 'three/addons/modifiers/SimplifyModifier.js';
-
+const newMaterial = new THREE.MeshStandardMaterial()
 function applyPS1TextureFilters(material) {
   const textureKeys = [
     'map',
@@ -82,6 +82,7 @@ export function applyLowPoly(object3d, reduction = 0.1, minVertices = 200) {
   object3d.traverse((child) => {
     if (!child.isMesh) return;
     if (!child.geometry || !child.geometry.attributes?.position) return;
+    
     const count = child.geometry.attributes.position.count;
     if (count < minVertices) return;
     const remove = Math.floor(count * reduction);

@@ -1,4 +1,4 @@
-import { loaderGLB } from './loaderTextureAndModel.js';
+﻿import { loaderGLB } from './loaderTextureAndModel.js';
 import * as THREE from 'three';
 import { loadTexturesMap } from './textures.js';
 function createWindowGradient() {
@@ -34,6 +34,7 @@ export function loadBar() {
         const lampDj = [];
         const lampTable = [];
         const lampCenter = [];
+        const signLights = [];
         const textures = await loadTexturesMap();
         const {
           brickWall_diff,
@@ -60,7 +61,7 @@ export function loadBar() {
             black.material.needsUpdate = true;
             light.material.material = new THREE.MeshStandardMaterial();
             light.material.emissive = new THREE.Color('#1b532c');
-           
+
             light.material.emissiveIntensity = 1;
             light.material.map = null;
             light.material.color.set('#000000');
@@ -386,15 +387,43 @@ export function loadBar() {
             glass.receiveShadow = false;
             glass.material.needsUpdate = true;
           }
+          if (child.name === 'вывеска_бар') {
+            const iggy = child.children[1];
+            const taproom = child.children[2];
+            iggy.material = new THREE.MeshStandardMaterial();
+            iggy.material.color.setStyle('#7fd6ff');
+            iggy.material.emissive = new THREE.Color('#2fb6ff');
+            iggy.material.emissiveIntensity = 2.2;
+            iggy.material.needsUpdate = true;
+            taproom.material = new THREE.MeshStandardMaterial();
+            taproom.material.color.setStyle('#ff6aa3');
+            taproom.material.emissive = new THREE.Color('#ff2f6f');
+            taproom.material.emissiveIntensity = 2.2;
+            taproom.material.needsUpdate = true;
+            console.log(taproom)
+            signLights.push({
+              position: {x:-3.7,y:1.9,z:4,},
+              color: 0x7fd6ff,
+              intensity: 1,
+              distance: 3,
+            });
+            signLights.push({
+              position: {x:-3.7,y:1.4,z:4,},
+              color: 0xff6aa3,
+              intensity: 1,
+              distance: 3,
+            });
+          }
         });
 
         lampBar.push({ position: { x: 3.35, z: 4.5, y: 3.35 } });
         lampBar.push({ position: { x: 0, z: 4.5, y: 3.35 } });
 
-        resolve({ bar, lampBar, lampDj, lampTable, lampCenter });
+        resolve({ bar, lampBar, lampDj, lampTable, lampCenter, signLights });
       },
       undefined,
       (error) => reject(error),
     );
   });
 }
+

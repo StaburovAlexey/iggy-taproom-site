@@ -6,7 +6,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const target = new THREE.Vector3(-5, 1, 0);
 
 export function createScene(container, models) {
-  const { bar, lampBar, lampDj, lampTable, lampCenter } = models;
+  const { bar, lampBar, lampDj, lampTable, lampCenter, signLights } = models;
   let resolveFirstFrame;
   const firstFrame = new Promise((resolve) => {
     resolveFirstFrame = resolve;
@@ -40,7 +40,7 @@ export function createScene(container, models) {
     pointlight = new THREE.PointLight(0xffd2a1, 1, 5);
     // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
     pointlight.position.set(x, y - 1.5, z);
-    pointlight.castShadow = true;
+    // pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
     // scene.add(pointLightHelper);
     scene.add(pointlight);
@@ -52,7 +52,7 @@ export function createScene(container, models) {
     pointlight = new THREE.PointLight(0xffd2a1, 0.8, 3.5);
     // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
     pointlight.position.set(x, y - 1.6, z);
-    pointlight.castShadow = true;
+    // pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
 
     // scene.add(pointLightHelper);
@@ -64,7 +64,7 @@ export function createScene(container, models) {
     pointlight = new THREE.PointLight(0xffd2a1, 0.4, 5);
     // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
     pointlight.position.set(x, y - 2.2, z + 0.2);
-    pointlight.castShadow = true;
+    // pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
 
     // scene.add(pointLightHelper);
@@ -80,6 +80,19 @@ export function createScene(container, models) {
     pointlight.shadow.mapSize.set(256, 256);
 
     // scene.add(pointLightHelper);
+    scene.add(pointlight);
+  });
+  signLights.forEach((item) => {
+    const { x, y, z } = item.position;
+    let pointlight;
+    pointlight = new THREE.PointLight(
+      item.color,
+      item.intensity,
+      item.distance,
+    );
+    pointlight.position.set(x, y, -z + 0.1);
+    pointlight.castShadow = true;
+    pointlight.shadow.mapSize.set(256, 256);
     scene.add(pointlight);
   });
 

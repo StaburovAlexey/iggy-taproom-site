@@ -212,7 +212,6 @@ export function createScene(container, models) {
   function animate() {
     stats.begin();
     clock.getDelta();
-    updateCameraFlight();
 
     renderer.render(scene, camera);
     if (resolveFirstFrame) {

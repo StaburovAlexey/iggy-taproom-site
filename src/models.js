@@ -27,7 +27,7 @@ const gradientTex = createWindowGradient();
 export function loadBar() {
   return new Promise((resolve, reject) => {
     loaderGLB.load(
-      '/model/BAR-1.glb',
+      '/model/BAR.glb',
       async (gltf) => {
         const bar = gltf.scene;
         const lampBar = [];
@@ -246,7 +246,7 @@ export function loadBar() {
             child.name.includes('сабвуфер') ||
             child.name === 'пивная_колонна' ||
             child.name === 'доска_еда' ||
-            child.name === 'доска_пиво' ||
+            child.name === 'доска_напитки' ||
             child.name === 'дверь' ||
             child.name === 'камин'
           ) {
@@ -357,7 +357,7 @@ export function loadBar() {
             barrel.material.needsUpdate = true;
           }
           if (
-            child.name === 'холодильник-пиво' ||
+            child.name === 'холодильник_напитки' ||
             child.name === 'холодильник-молоко'
           ) {
             const frame = child.children[0];

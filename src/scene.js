@@ -38,11 +38,8 @@ export function createScene(container, models) {
     const { x, y, z } = item.position;
     let pointlight;
     pointlight = new THREE.PointLight(0xffd2a1, 1, 5);
-    // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
     pointlight.position.set(x, y - 1.5, z);
-    // pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
-    // scene.add(pointLightHelper);
     scene.add(pointlight);
   });
 
@@ -50,36 +47,28 @@ export function createScene(container, models) {
     const { x, y, z } = item.position;
     let pointlight;
     pointlight = new THREE.PointLight(0xffd2a1, 0.8, 3.5);
-    // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
     pointlight.position.set(x, y - 1.6, z);
-    // pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
 
-    // scene.add(pointLightHelper);
     scene.add(pointlight);
   });
   lampTable.forEach((item) => {
     const { x, y, z } = item.position;
     let pointlight;
     pointlight = new THREE.PointLight(0xffd2a1, 0.4, 5);
-    // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
     pointlight.position.set(x, y - 2.2, z + 0.2);
-    // pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
 
-    // scene.add(pointLightHelper);
     scene.add(pointlight);
   });
   lampCenter.forEach((item) => {
     const { x, y, z } = item.position;
     let pointlight;
     pointlight = new THREE.PointLight(0xffd2a1, 0.7, 5);
-    // const pointLightHelper = new THREE.PointLightHelper(pointlight, 0.2);
     pointlight.position.set(x, y - 1.9, z);
     pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
 
-    // scene.add(pointLightHelper);
     scene.add(pointlight);
   });
   signLights.forEach((item) => {
@@ -149,8 +138,6 @@ export function createScene(container, models) {
   spotLight6.target.position.y = 1.1;
   spotLight6.target.position.z = 2.5;
 
-  const spotLightHelper6 = new THREE.SpotLightHelper(spotLight6);
-  // scene.add(spotLightHelper6);
   scene.add(spotLight6.target);
   scene.add(spotLight6);
   spotLight5.position.set(-3, 3.2, 3.3);
@@ -158,8 +145,6 @@ export function createScene(container, models) {
   spotLight5.target.position.y = 2.1;
   spotLight5.target.position.z = 2.5;
 
-  const spotLightHelper5 = new THREE.SpotLightHelper(spotLight5);
-  // scene.add(spotLightHelper5);
   scene.add(spotLight5.target);
   scene.add(spotLight5);
   spotLight4.position.set(-3, 3.2, -2.2);
@@ -168,8 +153,6 @@ export function createScene(container, models) {
   spotLight4.target.position.z = -2.3;
   spotLight4.castShadow = true;
   spotLight4.shadow.mapSize.set(256, 256);
-  const spotLightHelper4 = new THREE.SpotLightHelper(spotLight4);
-  // scene.add(spotLightHelper4);
   scene.add(spotLight4.target);
   scene.add(spotLight4);
   spotLight3.position.set(-3, 3.2, 2.2);
@@ -177,24 +160,18 @@ export function createScene(container, models) {
   spotLight3.target.position.y = 2.5;
   spotLight3.target.position.z = 2.5;
 
-  const spotLightHelper3 = new THREE.SpotLightHelper(spotLight3);
-  // scene.add(spotLightHelper3);
   scene.add(spotLight3.target);
   scene.add(spotLight3);
   spotLight2.position.set(-3, 3.2, -1.2);
   spotLight2.target.position.x = -6;
   spotLight2.target.position.y = 1.6;
 
-  const spotLightHelper2 = new THREE.SpotLightHelper(spotLight2);
-  // scene.add(spotLightHelper2);
   scene.add(spotLight2.target);
   scene.add(spotLight2);
   spotLight.position.set(-3, 3.2, 1.2);
   spotLight.target.position.x = -7;
   spotLight.target.position.y = 1.3;
   spotLight.castShadow = true;
-  const spotLightHelper = new THREE.SpotLightHelper(spotLight);
-  // scene.add(spotLightHelper);
   scene.add(spotLight.target);
   scene.add(spotLight);
   scene.add(bar);

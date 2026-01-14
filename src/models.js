@@ -10,11 +10,11 @@ function createWindowGradient() {
 
   const grad = ctx.createLinearGradient(0, 0, 0, 512);
 
-  grad.addColorStop(0.0, '#2f5bff'); // синий верх
+  grad.addColorStop(0.0, '#2f5bff');
   grad.addColorStop(0.3, '#5f7cff');
-  grad.addColorStop(0.5, '#9b6cff'); // фиолетовый центр
-  grad.addColorStop(0.7, '#ff9acb'); // розовый
-  grad.addColorStop(1.0, '#ffb6dc'); // светло-розовый низ
+  grad.addColorStop(0.5, '#9b6cff');
+  grad.addColorStop(0.7, '#ff9acb');
+  grad.addColorStop(1.0, '#ffb6dc');
 
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, 256, 512);
@@ -138,8 +138,6 @@ export function loadBar() {
             child.material.metalness = 0.1;
             child.castShadow = false;
             child.receiveShadow = true;
-            // child.material.color.set(0x3e6bd6);
-            // child.material.map.rotation = Math.PI * 0.25;
             child.material.needsUpdate = true;
           }
           if (child?.name === 'окно_рама') {
@@ -154,8 +152,6 @@ export function loadBar() {
             child.material.metalness = 0.1;
             child.castShadow = false;
             child.receiveShadow = true;
-            // child.material.color.set(0x3e6bd6);
-            // child.material.map.rotation = Math.PI * 0.25;
             child.material.needsUpdate = true;
           }
           if (
@@ -402,13 +398,13 @@ export function loadBar() {
             taproom.material.needsUpdate = true;
             console.log(taproom)
             signLights.push({
-              position: {x:-3.7,y:1.9,z:4,},
+              position: {x:-3.7,y:2.4,z:4,},
               color: 0x7fd6ff,
               intensity: 1,
               distance: 3,
             });
             signLights.push({
-              position: {x:-3.7,y:1.4,z:4,},
+              position: {x:-3.7,y:1.7,z:4,},
               color: 0xff6aa3,
               intensity: 1,
               distance: 3,

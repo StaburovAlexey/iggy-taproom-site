@@ -49,6 +49,7 @@ export function loadBar() {
           rust_coarse_01_1k,
           cup_texture,
           beer_texture,
+          board_beer_texture,
         } = textures;
         bar.traverse((child) => {
           if (child.isMesh) {
@@ -140,7 +141,7 @@ export function loadBar() {
             child.material.metalness = 0.1;
             child.castShadow = true;
             child.receiveShadow = true;
-            // child.material.shadowSide = THREE.DoubleSide;
+            child.material.shadowSide = THREE.DoubleSide;
             // child.material.side = THREE.DoubleSide;
             child.material.needsUpdate = true;
           }
@@ -250,7 +251,8 @@ export function loadBar() {
             child.name === 'доска_еда' ||
             child.name === 'доска_напитки' ||
             child.name === 'дверь' ||
-            child.name === 'камин'
+            child.name === 'камин' ||
+            child.name === 'касса'
           ) {
             child.material = child.material.clone();
             child.material.color.set(0x0f0f10);
@@ -461,6 +463,63 @@ export function loadBar() {
             child.position.y = child.position.y - 0.03;
             child.scale.set(0.5, 0.2, 0.5);
             child.receiveShadow = false;
+          }
+          if (child.name.includes('салфетница')) {
+            const paper = child.children[2];
+            const wood = child.children[1];
+            wood.material = new THREE.MeshStandardMaterial({
+              color: '#473518',
+            });
+            paper.material = new THREE.MeshStandardMaterial({
+              color: '#cccccc',
+            });
+          }
+          if (child.name.includes('qr')) {
+            child.material = new THREE.MeshStandardMaterial({
+              color: '#473518',
+            });
+          }
+          if (child.name.includes('банка')) {
+            child.material = new THREE.MeshStandardMaterial({
+              color: '#8a9b9c',
+              opacity: 0.5,
+              transparent: true,
+            });
+          }
+          if (child.name.includes('доска_напитки')) {
+            child.material = new THREE.MeshStandardMaterial({
+              map: board_beer_texture,
+            });
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.rotation = Math.PI * 0.5;
+            child.material.map.repeat.x = -1;
+          }
+          if (child.name.includes('вертак')) {
+            console.log(child);
+            const main = child.children[0];
+            const plastic = child.children[2];
+            const wood = child.children[1];
+            wood.material = new THREE.MeshStandardMaterial({
+              color: '#ececec',
+            });
+            main.material = new THREE.MeshStandardMaterial({
+              color: '#444444',
+            });
+            plastic.material = new THREE.MeshStandardMaterial({
+              color: '#000000',
+            });
+          }
+          if (child.name.includes('пульт')) {
+            console.log(child);
+            const main = child.children[0];
+            const wood = child.children[1];
+            wood.material = new THREE.MeshStandardMaterial({
+              color: '#ececec',
+            });
+            main.material = new THREE.MeshStandardMaterial({
+              color: '#000000',
+            });
           }
         });
 

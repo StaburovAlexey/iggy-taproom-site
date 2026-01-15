@@ -7,11 +7,11 @@ export function createCameraFlight(camera, clock) {
       look: new THREE.Vector3(-4, 1, 0),
     },
     {
-      pos: new THREE.Vector3(-2.6, 1.6, 5),
+      pos: new THREE.Vector3(-1.6, 1.6, 5),
       look: new THREE.Vector3(-5, 1, 0),
     },
     {
-      pos: new THREE.Vector3(-4, 2.4, 1.5),
+      pos: new THREE.Vector3(-4, 1.6, 1.5),
       look: new THREE.Vector3(-2, 1.7, -0.5),
     },
     {

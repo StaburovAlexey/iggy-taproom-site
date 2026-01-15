@@ -35,13 +35,14 @@ export function createScene(container, models) {
 
   const scene = new THREE.Scene();
 
-  lampBar.forEach((item) => {
+  lampBar.forEach((item, index) => {
     const { x, y, z } = item.position;
-    let pointlight;
-    pointlight = new THREE.PointLight(0xffd2a1, 1, 5);
+    const pointlight = new THREE.PointLight(0xffd2a1, 1, 5);
     pointlight.position.set(x, y - 1.7, z);
     pointlight.shadow.mapSize.set(256, 256);
-    pointlight.castShadow = true;
+    if (index % 2 === 0) {
+      pointlight.castShadow = true;
+    }
     scene.add(pointlight);
   });
 
@@ -60,7 +61,7 @@ export function createScene(container, models) {
     pointlight = new THREE.PointLight(0xffd2a1, 0.4, 5);
     pointlight.position.set(x, y - 2.2, z + 0.2);
     pointlight.shadow.mapSize.set(256, 256);
- 
+
     scene.add(pointlight);
   });
   lampCenter.forEach((item) => {
@@ -211,9 +212,9 @@ export function createScene(container, models) {
 
   function animate() {
     stats.begin();
-    clock.getDelta();
 
     renderer.render(scene, camera);
+    updateCameraFlight();
     if (resolveFirstFrame) {
       resolveFirstFrame();
       resolveFirstFrame = null;

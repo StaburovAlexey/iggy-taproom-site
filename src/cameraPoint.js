@@ -1,4 +1,5 @@
 import { Vector3 } from 'three';
+import { gsap } from 'gsap';
 const pointCameraPosition = {
   main: {
     position: { x: -1, y: 2, z: 5.5 },
@@ -26,8 +27,20 @@ export function goPoint(camera, controls, namePosition) {
   const target = pointCameraPosition[namePosition].target;
   const targetVector = new Vector3(target.x, target.y, target.z);
   const point = pointCameraPosition[namePosition].position;
-  camera.position.set(point.x, point.y, point.z);
-  camera.lookAt(targetVector);
-  controls.target.copy(targetVector);
-  controls.update();
+  gsap.to(camera.position, {
+    x: point.x,
+    y: point.y,
+    z: point.z,
+    duration: 1.1,
+    ease: 'power2.out',
+    onUpdate: () => controls.update(),
+  });
+  gsap.to(controls.target, {
+    x: targetVector.x,
+    y: targetVector.y,
+    z: targetVector.z,
+    duration: 1.1,
+    ease: 'power2.out',
+    onUpdate: () => controls.update(),
+  });
 }

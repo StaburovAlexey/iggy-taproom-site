@@ -1,10 +1,7 @@
 import * as THREE from 'three';
-import GUI from 'lil-gui';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { createCameraFlight } from './cameraFlight.js';
-
-const target = new THREE.Vector3(-5, 1, 0);
+import { goPoint } from './cameraPoint.js';
 
 export function createScene(container, models) {
   const { bar, lampBar, lampDj, lampTable, lampCenter, signLights } = models;
@@ -180,25 +177,18 @@ export function createScene(container, models) {
   scene.add(bar);
 
   const camera = new THREE.PerspectiveCamera(
-    40,
+    55,
     container.clientWidth / container.clientHeight,
     0.1,
     50,
   );
-  camera.position.set(-1, 2, 6);
-  camera.lookAt(target);
   const controls = new OrbitControls(camera, renderer.domElement);
-  controls.target.copy(target);
   controls.update();
   controls.enabled = true;
-
-  const clock = new THREE.Clock();
+  goPoint(camera, controls, 'main');
   const stats = new Stats();
   stats.dom.classList.add('stats');
   container.appendChild(stats.dom);
-
-  const gui = new GUI({ width: 240 });
-  const updateCameraFlight = createCameraFlight(camera, clock);
 
   function onResize() {
     const width = container.clientWidth;
@@ -214,7 +204,6 @@ export function createScene(container, models) {
     stats.begin();
 
     renderer.render(scene, camera);
-    updateCameraFlight();
     if (resolveFirstFrame) {
       resolveFirstFrame();
       resolveFirstFrame = null;

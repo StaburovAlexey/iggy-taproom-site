@@ -1,6 +1,7 @@
 import './style.css';
 import './components/menu-panel.js';
 import './components/app-preloader.js';
+import './components/menu-window.js';
 import { createScene } from './scene.js';
 import { loadingDone } from './loaderTextureAndModel.js';
 import { loadBar } from './models.js';
@@ -15,5 +16,9 @@ await loadingDone;
 const models = await loadBar()
 applyLowPoly(models.bar, 0.01, 1500);
 applyPS1Style(models.bar);
-createScene(app, models);
+const { firstFrame, goToPoint } = createScene(app, models);
+await firstFrame;
+const menuWindow = document.createElement('menu-window');
+menuWindow.addEventListener('navigate', (event) => goToPoint(event.detail));
+document.body.appendChild(menuWindow);
 preloader.hide();

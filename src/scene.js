@@ -214,5 +214,9 @@ export function createScene(container, models) {
 
   animate();
 
-  return { firstFrame };
+  const goToPoint = (namePosition) => {
+    goPoint(camera, controls, namePosition);
+  };
+
+  return { firstFrame, goToPoint };
 }

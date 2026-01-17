@@ -7,15 +7,23 @@ export const texturePaths = {
   brickWall_gl: '/textures/brick_wall_006_1k/brick_wall_006_nor_gl_1k.jpg',
   interior_tiles_diff: '/textures/interior_tiles_1k/interior_tiles_diff_1k.jpg',
   wood_table_diff: '/textures/wood_table_001_1k/wood_table_001_diff_1k.jpg',
-  wood_planks_dirt_1k: '/textures/wood_planks_dirt_1k/wood_planks_dirt_diff_1k.jpg',
-  wood_planks_1k : '/textures/wood_planks_1k/wood_planks_diff_1k.jpg',
+  wood_planks_dirt_1k:
+    '/textures/wood_planks_dirt_1k/wood_planks_dirt_diff_1k.jpg',
+  wood_planks_1k: '/textures/wood_planks_1k/wood_planks_diff_1k.jpg',
   wood_planks_nor_gl_1k: '/textures/wood_planks_1k/wood_planks_nor_gl_1k.jpg',
   rough_wood_diff_1k: '/textures/rough_wood_1k/rough_wood_diff_1k.jpg',
   wood_shutter_1k: '/textures/wood_shutter_1k/wood_shutter_diff_1k.jpg',
   rust_coarse_01_1k: '/textures/rust_coarse_01_1k/rust_coarse_01_diff_1k.jpg',
   cup_texture: '/textures/cup_texture.png',
   beer_texture: '/textures/beer_texture.png',
-  board_beer_texture: '/textures/board_beer_texture.png'
+  board_beer_texture: '/textures/board_beer_texture.png',
+  menu_eat_texture: '/textures/menu_eat_texture.jpg',
+  picture_texture_2: '/textures/picture_texture%20(2).jpg',
+  picture_texture_3: '/textures/picture_texture%20(3).jpg',
+  picture_texture_4: '/textures/picture_texture%20(4).jpg',
+  picture_texture_jpg: '/textures/picture_texture.jpg',
+  picture_texture_png: '/textures/picture_texture.png',
+  promo_texture: '/textures/promo_texture.jpg',
 };
 
 export function loadTexture(path) {

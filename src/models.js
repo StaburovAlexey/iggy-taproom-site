@@ -50,6 +50,13 @@ export function loadBar() {
           cup_texture,
           beer_texture,
           board_beer_texture,
+          menu_eat_texture,
+          picture_texture_2,
+          picture_texture_3,
+          picture_texture_jpg,
+          picture_texture_png,
+          promo_texture,
+          picture_texture_4,
         } = textures;
         bar.traverse((child) => {
           if (child.isMesh) {
@@ -416,6 +423,34 @@ export function loadBar() {
               distance: 3,
             });
           }
+          if (child.name === 'neon_dj') {
+            console.log(child);
+            const top = child.children[0];
+            const bottom = child.children[1];
+            top.material = new THREE.MeshStandardMaterial();
+            top.material.color.setStyle('#7fd6ff');
+            top.material.emissive = new THREE.Color('#2fb6ff');
+            top.material.emissiveIntensity = 2.2;
+            top.material.needsUpdate = true;
+            bottom.material = new THREE.MeshStandardMaterial();
+            bottom.material.color.setStyle('#ff6aa3');
+            bottom.material.emissive = new THREE.Color('#ff2f6f');
+            bottom.material.emissiveIntensity = 2.2;
+            bottom.material.needsUpdate = true;
+
+            signLights.push({
+              position: { x: 4.6, y: 2.6, z: 0 },
+              color: 0x7fd6ff,
+              intensity: 1,
+              distance: 3,
+            });
+            signLights.push({
+              position: { x: 4.6, y: 2.2, z: 0 },
+              color: 0xff6aa3,
+              intensity: 1,
+              distance: 3,
+            });
+          }
           if (child.name === 'кофемашина') {
             const main = child.children[0];
             const glass = child.children[2];
@@ -496,7 +531,6 @@ export function loadBar() {
             child.material.map.repeat.x = -1;
           }
           if (child.name.includes('вертак')) {
-            console.log(child);
             const main = child.children[0];
             const plastic = child.children[2];
             const wood = child.children[1];
@@ -511,7 +545,6 @@ export function loadBar() {
             });
           }
           if (child.name.includes('пульт')) {
-            console.log(child);
             const main = child.children[0];
             const wood = child.children[1];
             wood.material = new THREE.MeshStandardMaterial({
@@ -520,6 +553,83 @@ export function loadBar() {
             main.material = new THREE.MeshStandardMaterial({
               color: '#000000',
             });
+          }
+          if (child.name === 'picture003') {
+            const material = new THREE.MeshStandardMaterial({
+              transparent: true,
+              alphaTest: 0.5,
+              map: picture_texture_png,
+            });
+            child.material = material;
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+            // child.material.map.repeat.x = -1;
+            child.material.map.rotation = Math.PI * -1.5;
+          }
+          if (child.name === 'picture004') {
+            const material = new THREE.MeshStandardMaterial({
+              map: picture_texture_jpg,
+            });
+            child.material = material;
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+            // child.material.map.repeat.x = -1;
+            child.material.map.rotation = Math.PI * -1.5;
+          }
+          if (child.name === 'picture002') {
+            const material = new THREE.MeshStandardMaterial({
+              map: picture_texture_2,
+            });
+            child.material = material;
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+            // child.material.map.repeat.x = -1;
+            child.material.map.rotation = Math.PI * -1.5;
+          }
+          if (child.name === 'picture001') {
+            const material = new THREE.MeshStandardMaterial({
+              map: picture_texture_3,
+            });
+            child.material = material;
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+            // child.material.map.repeat.x = -1;
+            child.material.map.rotation = Math.PI * -1.5;
+          }
+          if (child.name === 'picture') {
+            const material = new THREE.MeshStandardMaterial({
+              map: picture_texture_4,
+            });
+            child.material = material;
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+            // child.material.map.repeat.x = -1;
+          }
+          if (child.name === 'activity') {
+            const material = new THREE.MeshStandardMaterial({
+              map: promo_texture,
+            });
+            child.material = material;
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+            // child.material.map.repeat.x = -1;
+          }
+          if (child.name === 'доска_еда') {
+            const material = new THREE.MeshStandardMaterial({
+              map: menu_eat_texture,
+            });
+            child.material = material;
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+            child.material.map.repeat.x = -1;
+            child.material.map.rotation = Math.PI * -1;
           }
         });
 

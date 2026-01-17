@@ -82,6 +82,7 @@ export function createScene(container, models) {
     pointlight.position.set(x, y, -z + 0.1);
     pointlight.castShadow = true;
     pointlight.shadow.mapSize.set(256, 256);
+ 
     scene.add(pointlight);
   });
 

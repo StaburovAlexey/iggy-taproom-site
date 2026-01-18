@@ -6,10 +6,16 @@
   ],
   menu: [
     { id: 'beer', label: 'Пиво', target: 'beer' },
-    { id: 'food', label: 'Еда', target: 'menu' },
+    { id: 'food', label: 'Еда', target: 'eat' },
     { id: 'snacks', label: 'Закуски', target: 'menu' },
     { id: 'back', label: 'Назад', target: 'main', nextMode: 'main' },
   ],
+};
+
+const menuListByAction = {
+  beer: 'beer',
+  food: 'eat',
+  snacks: 'snacks',
 };
 
 const template = document.createElement('template');
@@ -106,6 +112,21 @@ class MenuWindow extends HTMLElement {
       );
       if (!action) {
         return;
+      }
+      const menuListCategory = menuListByAction[action.id];
+      if (menuListCategory) {
+        this.dispatchEvent(
+          new CustomEvent('menu-list-open', {
+            detail: menuListCategory,
+            bubbles: true,
+          }),
+        );
+      } else {
+        this.dispatchEvent(
+          new CustomEvent('menu-list-close', {
+            bubbles: true,
+          }),
+        );
       }
       if (action.nextMode) {
         this.mode = action.nextMode;

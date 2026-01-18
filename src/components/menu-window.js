@@ -1,15 +1,24 @@
-﻿const actionsByMode = {
+﻿const backToMain = {
+  id: 'back',
+  label: 'Назад',
+  target: 'main',
+  nextMode: 'main',
+};
+
+const actionsByMode = {
   main: [
     { id: 'menu', label: 'Меню', target: 'menu', nextMode: 'menu' },
-    { id: 'activity', label: 'Мероприятия', target: 'activity' },
-    { id: 'barmen', label: 'Бармен', target: 'barmen' },
+    { id: 'activity', label: 'Мероприятия', target: 'activity', nextMode: 'activity' },
+    { id: 'barmen', label: 'Бармен', target: 'barmen', nextMode: 'barmen' },
   ],
   menu: [
     { id: 'beer', label: 'Пиво', target: 'beer' },
     { id: 'food', label: 'Еда', target: 'eat' },
     { id: 'snacks', label: 'Закуски', target: 'menu' },
-    { id: 'back', label: 'Назад', target: 'main', nextMode: 'main' },
+    backToMain,
   ],
+  activity: [backToMain],
+  barmen: [backToMain],
 };
 
 const menuListByAction = {

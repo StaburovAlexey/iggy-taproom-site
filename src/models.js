@@ -78,6 +78,8 @@ export function loadBar() {
             light.material.transparent = true;
             light.material.opacity = 0.75;
             light.material.side = THREE.DoubleSide;
+            light.castShadow = false;
+            light.receiveShadow = false;
             light.material.needsUpdate = true;
             lampBar.push(child);
           }
@@ -296,6 +298,7 @@ export function loadBar() {
             const wallMap = wood_planks_nor_gl_1k.clone();
             child.material.normalMap = wallMap;
             child.castShadow = false;
+            child.receiveShadow = false;
             child.material.normalMap.repeat.set(16, 16);
             child.material.normalMap.wrapS = THREE.RepeatWrapping;
             child.material.normalMap.wrapT = THREE.RepeatWrapping;

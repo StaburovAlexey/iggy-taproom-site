@@ -32,7 +32,7 @@ function createPS1Material(baseMaterial) {
       `
         vec4 mvPosition = modelViewMatrix * vec4( transformed, 1.0 );
         vec4 projected = projectionMatrix * mvPosition;
-        float snapScale = 40.0;
+        float snapScale = 60.0;
         projected.xy = floor(projected.xy * snapScale) / snapScale;
         gl_Position = projected;
       `,

@@ -147,7 +147,7 @@ export function loadBar() {
             child.material.roughness = 0.8;
             child.material.metalness = 0.1;
             child.castShadow = true;
-            child.receiveShadow = true;
+            child.receiveShadow = false;
             child.material.shadowSide = THREE.DoubleSide;
             // child.material.side = THREE.DoubleSide;
             child.material.needsUpdate = true;
@@ -630,6 +630,24 @@ export function loadBar() {
             child.material.map.colorSpace = THREE.SRGBColorSpace;
             child.material.map.repeat.x = -1;
             child.material.map.rotation = Math.PI * -1;
+          }
+          if (child.name === 'доски-окна') {
+            const material = new THREE.MeshStandardMaterial({
+              map: wood_table_diff,
+              side: THREE.DoubleSide,
+            });
+            child.material = material;
+            child.material.map.wrapS = THREE.RepeatWrapping;
+            child.material.map.wrapT = THREE.RepeatWrapping;
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+      
+            child.material.map.rotation = Math.PI * -1;
+          }
+          if (child.name.includes('батарея')) {
+         
+            child.material = new THREE.MeshStandardMaterial({
+              color: '#350d0d',
+            });
           }
         });
 

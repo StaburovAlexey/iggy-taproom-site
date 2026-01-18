@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import Stats from 'stats.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { goPoint } from './cameraPoint.js';
+import { createDust } from './dust.js';
 
 export function createScene(container, models) {
   const { bar, lampBar, lampDj, lampTable, lampCenter, signLights } = models;
@@ -176,6 +177,7 @@ export function createScene(container, models) {
   scene.add(spotLight.target);
   scene.add(spotLight);
   scene.add(bar);
+  const dust = createDust(scene);
 
   const camera = new THREE.PerspectiveCamera(
     55,
@@ -206,7 +208,8 @@ export function createScene(container, models) {
 
   function animate() {
     stats.begin();
-    const time = clock.getElapsedTime();
+    const delta = clock.getDelta();
+    const time = clock.elapsedTime;
     const wobbleX = Math.sin(time * 0.3) * 0.008;
     const wobbleY = Math.cos(time * 0.4) * 0.005;
     controls.target.set(
@@ -215,6 +218,7 @@ export function createScene(container, models) {
       baseTarget.z,
     );
     controls.update();
+    dust.update(delta, time);
     renderer.render(scene, camera);
     if (resolveFirstFrame) {
       resolveFirstFrame();

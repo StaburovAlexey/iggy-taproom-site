@@ -184,9 +184,12 @@ export function createScene(container, models) {
     50,
   );
   const controls = new OrbitControls(camera, renderer.domElement);
+  const baseTarget = new THREE.Vector3();
+  baseTarget.copy(controls.target);
+  const clock = new THREE.Clock();
   controls.update();
   controls.enabled = true;
-  goPoint(camera, controls, 'main');
+  goPoint(camera, controls, 'main', baseTarget);
   const stats = new Stats();
   stats.dom.classList.add('stats');
   container.appendChild(stats.dom);
@@ -203,7 +206,15 @@ export function createScene(container, models) {
 
   function animate() {
     stats.begin();
-
+    const time = clock.getElapsedTime();
+    const wobbleX = Math.sin(time * 0.3) * 0.008;
+    const wobbleY = Math.cos(time * 0.4) * 0.005;
+    controls.target.set(
+      baseTarget.x + wobbleX,
+      baseTarget.y + wobbleY,
+      baseTarget.z,
+    );
+    controls.update();
     renderer.render(scene, camera);
     if (resolveFirstFrame) {
       resolveFirstFrame();
@@ -216,7 +227,7 @@ export function createScene(container, models) {
   animate();
 
   const goToPoint = (namePosition) => {
-    goPoint(camera, controls, namePosition);
+    goPoint(camera, controls, namePosition, baseTarget);
   };
 
   return { firstFrame, goToPoint };

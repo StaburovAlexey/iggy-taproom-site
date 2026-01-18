@@ -31,7 +31,7 @@ const pointCameraPosition = {
   },
 };
 
-export function goPoint(camera, controls, namePosition) {
+export function goPoint(camera, controls, namePosition, baseTarget = controls.target) {
   const target = pointCameraPosition[namePosition].target;
   const targetVector = new Vector3(target.x, target.y, target.z);
   const point = pointCameraPosition[namePosition].position;
@@ -43,7 +43,7 @@ export function goPoint(camera, controls, namePosition) {
     ease: 'power2.out',
     onUpdate: () => controls.update(),
   });
-  gsap.to(controls.target, {
+  gsap.to(baseTarget, {
     x: targetVector.x,
     y: targetVector.y,
     z: targetVector.z,

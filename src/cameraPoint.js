@@ -5,17 +5,25 @@ const pointCameraPosition = {
     position: { x: -1, y: 2, z: 5.5 },
     target: { x: -4, y: 1, z: 0 },
   },
+
   menu: {
     position: { x: -2.4, y: 1.4, z: 0 },
     target: { x: -3, y: 1.2, z: 0 },
   },
+  
   beer: {
     position: { x: -2.4, y: 1.4, z: 0 },
     target: { x: -3, y: 1.6, z: 0 },
   },
+  eat: {
+    position: { x: -2.4, y: 1.4, z: 1 },
+    target: { x: -3, y: 1.65, z: 1.2 },
+  },
   activity: {
-    position: { x: 3.8, y: 1.8, z: 1.6 },
-    target: { x: 0, y: 0, z: -1.4 },
+    // position: { x: 3.8, y: 1.8, z: 1.6 },
+    // target: { x: 0, y: 0, z: -1.4 },
+    position: { x: -0.5, y: 2, z: 3.5 },
+    target: { x: 2, y: 1, z: 1 },
   },
   barmen: {
     position: { x: -2.2, y: 1.5, z: 0.6 },

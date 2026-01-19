@@ -1,29 +1,182 @@
-const menuData = {
+﻿const menuData = {
   beer: {
     title: 'Пиво',
     items: [
-      { name: 'Iggy Lager', desc: '0.5 л', price: '220 ₽' },
-      { name: 'Northern Ale', desc: '0.4 л', price: '240 ₽' },
-      { name: 'Dark Porter', desc: '0.33 л', price: '260 ₽' },
-      { name: 'Wheat Sun', desc: '0.4 л', price: '230 ₽' },
+      {
+        name: 'Oktoberfestbier (Oka River)',
+        desc: 'doppelbock - 7.5% - 0.4л',
+        price: '370р',
+      },
+      {
+        name: 'Red Shamrock (Oka River)',
+        desc: 'red ale - 6% - 0.4л',
+        price: '340р',
+      },
+      {
+        name: 'Weisse (Oka River)',
+        desc: 'weisse - 5% - 0.5л',
+        price: '300р',
+      },
+      {
+        name: 'Мещерский зубр (Oka River)',
+        desc: 'blonde ale - 7.5% - 0.3л',
+        price: '340р',
+      },
+      {
+        name: 'Pilsner (Oka River)',
+        desc: 'pils - 5% - 0.5л',
+        price: '300р',
+      },
+      {
+        name: 'Helles (Oka River)',
+        desc: 'lager - 5% - 0.5л',
+        price: '300р',
+      },
+      {
+        name: 'Latte Nero (Oka River)',
+        desc: 'stout - 6% - 0.4л',
+        price: '330р',
+      },
+      {
+        name: 'Iggy Hop (Oka River)',
+        desc: 'IPA - 6% - 0.4л',
+        price: '340р',
+      },
     ],
   },
   eat: {
     title: 'Еда',
     items: [
-      { name: 'Бургер Iggy', desc: 'говядина, сыр, соус', price: '420 ₽' },
-      { name: 'Куриный ролл', desc: 'соус терияки', price: '340 ₽' },
-      { name: 'Салат гриль', desc: 'овощи, фета', price: '310 ₽' },
-      { name: 'Паста днём', desc: 'сливочный соус', price: '360 ₽' },
+      {
+        name: 'БУРГЕР BEEF&JAM',
+        desc: '(Котлета из мраморной говядины, луковый конфитюр, маринованные огурцы, кленовый майонез, соус дорблю)',
+        price: '330г/560р',
+      },
+      {
+        name: 'БУРГЕР BASIC',
+        desc: '(Котлета из мраморной говядины, чеддер, маринованные огурцы, лук, соус)',
+        price: '330г/530р',
+      },
+      {
+        name: 'БУРГЕР THAI CHICKEN',
+        desc: '(Куриная грудка темпура, лук фри, салат айсберг, сладкий соус чили, соус таратор, кинза)',
+        price: '320г/480р',
+      },
+      {
+        name: 'БУРГЕР KIMCHEESE',
+        desc: '(Котлета из мраморной говядины, чеддер, капуста кимчи, маринованный огурец, лук, соус)',
+        price: '340г/510р',
+      },
+      {
+        name: 'ХОТ-ДОГ NYC',
+        desc: '(Колбаска свино-говяжья, маринованные огурцы, кетчуп, горчица, лук фри)',
+        price: '290г/410р',
+      },
+      {
+        name: 'ХОТ-ДОГ SEATTLE STYLE',
+        desc: '(Колбаска свино-говяжья, сливочный сыр, обжаренный лук, кетчуп, халапеньо)',
+        price: '300г/410р',
+      },
+      {
+        name: 'КАПУСТА КИМЧИ',
+        desc: '(Пекинская капуста, маринованная в пасте кимчи, соевом соусе и кунжутном масле)',
+        price: '200г/220р',
+      },
+      {
+        name: 'КОУЛСЛО',
+        desc: '(Капуста, морковь, кукуруза, соус)',
+        price: '150г/220р',
+      },
+      {
+        name: "Mac'n Cheese",
+        desc: '(Паста, сырный соус, пармезан, лук фри, сухари панко)',
+        price: '350г/320р',
+      },
+      {
+        name: "Mac'n Cheese Bacon",
+        desc: '(Паста, сырный соус, пармезан, бекон, лук фри, сухари панко)',
+        price: '380г/360р',
+      },
+      {
+        name: 'КАРТОФЕЛЬ ФРИ',
+        desc: '(Картофель, соус тартар)',
+        price: '220г/270р',
+      },
+      {
+        name: 'КАРТОФЕЛЬ ПО-ДЕРЕВЕНСКИ',
+        desc: '(Картофель, соус тартар)',
+        price: '220г/290р',
+      },
+      {
+        name: 'СЫРНЫЕ ПАЛОЧКИ',
+        desc: '(Сырные палочки, соус брусника-бадьян)',
+        price: '200г/450р',
+      },
+      {
+        name: 'КУРИНЫЕ КРЫЛЬЯ',
+        desc: '(Куриные крылья в панировке, соус сальса)',
+        price: '280г/380р',
+      },
+      {
+        name: 'МАРИНОВАННОЕ ЯЙЦО',
+        desc: '(Свекла/маринованные огурцы/соево-коричный)',
+        price: '70р/шт',
+      },
     ],
   },
   snacks: {
     title: 'Закуски',
     items: [
-      { name: 'Картофель фри', desc: 'соус на выбор', price: '190 ₽' },
-      { name: 'Начиос', desc: 'сырный дип', price: '210 ₽' },
-      { name: 'Сырные палочки', desc: '6 шт', price: '250 ₽' },
-      { name: 'Куриные крылья', desc: 'острый BBQ', price: '320 ₽' },
+      {
+        name: 'АРАХИС НЕОЧИЩЕННЫЙ',
+        desc: '(100 гр)',
+        price: '200 р',
+      },
+      {
+        name: 'ФИСТАШКИ ЖАРЕНЫЕ',
+        desc: '(100 гр)',
+        price: '350 р',
+      },
+      {
+        name: 'ОЛИВКИ',
+        desc: '(100 гр)',
+        price: '280 р',
+      },
+      {
+        name: 'МИНИ-САЛЯМИ',
+        desc: '(100 гр)',
+        price: '300 р',
+      },
+      {
+        name: 'НАЧОС',
+        desc: '(150/50 гр)',
+        price: '350 р',
+      },
+      {
+        name: 'МАРИНОВАННОЕ ЯЙЦО',
+        desc: '(1 шт)',
+        price: '70 р',
+      },
+      {
+        name: 'ДЖЕРКИ',
+        desc: '(50 гр)',
+        price: '350 р',
+      },
+      {
+        name: 'НАЧОС С ЧИЛИ КОН КАРНЕ',
+        desc: '(75/280 гр)',
+        price: '520 р',
+      },
+      {
+        name: 'МЯСНАЯ ТАРЕЛКА',
+        desc: '(гриссини, коппа, утиная грудка, брауншвейская, чоризо, оливки)',
+        price: '850 р',
+      },
+      {
+        name: 'ГРИССИНИ',
+        desc: '(70 гр)',
+        price: '200 р',
+      },
     ],
   },
 };
@@ -34,8 +187,9 @@ template.innerHTML = `
   <style>
     :host {
       position: fixed;
-      left: 65%;
-      bottom: 8%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-100%, -50%);
       z-index: 13;
       display: none;
       font-family: "Press Start 2P", "VT323", "Fira Sans", "Segoe UI", sans-serif;
@@ -52,6 +206,8 @@ template.innerHTML = `
       gap: 12px;
       padding: 16px;
       min-width: 280px;
+      max-height: 90vh;
+      grid-template-rows: auto 1fr;
       border-radius: 6px;
       background:
         linear-gradient(180deg, rgba(19, 24, 36, 0.96), rgba(7, 9, 16, 0.98)),
@@ -108,6 +264,10 @@ template.innerHTML = `
     .list {
       display: grid;
       gap: 10px;
+      overflow: auto;
+      padding-right: 6px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 207, 122, 0.7) rgba(5, 7, 12, 0.55);
     }
 
     .item {
@@ -137,6 +297,27 @@ template.innerHTML = `
       letter-spacing: 0.12em;
       color: #ffcf7a;
       white-space: nowrap;
+    }
+
+    .list::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .list::-webkit-scrollbar-track {
+      background: rgba(5, 7, 12, 0.55);
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px rgba(255, 214, 154, 0.2);
+    }
+
+    .list::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, rgba(255, 231, 185, 0.85), rgba(255, 180, 74, 0.6));
+      border-radius: 10px;
+      border: 1px solid rgba(255, 214, 154, 0.4);
+      box-shadow: inset 0 0 0 1px rgba(5, 7, 12, 0.35);
+    }
+
+    .list::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, rgba(255, 231, 185, 1), rgba(255, 180, 74, 0.8));
     }
   </style>
   <div class="panel">
@@ -191,7 +372,7 @@ class MenuListWindow extends HTMLElement {
   render() {
     const data = this.category ? menuData[this.category] : null;
     if (!data) {
-      this.titleRoot.textContent = 'Меню';
+      this.titleRoot.textContent = 'РњРµРЅСЋ';
       this.listRoot.innerHTML = '';
       return;
     }

@@ -7,6 +7,8 @@ import { createScene } from './scene.js';
 import { loadingDone } from './loaderTextureAndModel.js';
 import { loadBar } from './models.js';
 import { applyLowPoly, applyPS1Style } from './ps1.js';
+import { pointCameraPosition } from './cameraPoint.js';
+import { createMenuHoverModels } from './menuHoverModels.js';
 
 
 const app = document.body;
@@ -17,15 +19,32 @@ await loadingDone;
 const models = await loadBar()
 applyLowPoly(models.bar, 0.01, 1500);
 applyPS1Style(models.bar);
-const { firstFrame, goToPoint } = createScene(app, models);
+const { firstFrame, goToPoint, scene, addUpdate } = createScene(app, models);
+const menuTarget = pointCameraPosition.menu.target;
+const menuHoverModels = await createMenuHoverModels(scene, menuTarget);
+addUpdate(menuHoverModels.update);
 await firstFrame;
 const menuWindow = document.createElement('menu-window');
 const menuListWindow = document.createElement('menu-list-window');
-menuWindow.addEventListener('navigate', (event) => goToPoint(event.detail));
+let currentPoint = 'main';
+menuWindow.addEventListener('navigate', (event) => {
+  currentPoint = event.detail;
+  goToPoint(event.detail);
+  if (currentPoint !== 'menu') {
+    menuHoverModels.hide();
+  }
+});
 menuWindow.addEventListener('menu-list-open', (event) =>
   menuListWindow.open(event.detail),
 );
 menuWindow.addEventListener('menu-list-close', () => menuListWindow.close());
+menuWindow.addEventListener('menu-hover', (event) => {
+  if (currentPoint !== 'menu') {
+    return;
+  }
+  menuHoverModels.show(event.detail);
+});
+menuWindow.addEventListener('menu-hover-out', () => menuHoverModels.hide());
 document.body.appendChild(menuWindow);
 document.body.appendChild(menuListWindow);
 preloader.hide();

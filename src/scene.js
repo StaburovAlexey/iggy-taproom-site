@@ -10,6 +10,7 @@ export function createScene(container, models) {
   const firstFrame = new Promise((resolve) => {
     resolveFirstFrame = resolve;
   });
+  const updates = [];
 
   const renderer = new THREE.WebGLRenderer({ antialias: false });
   renderer.setPixelRatio(1);
@@ -218,6 +219,7 @@ export function createScene(container, models) {
       baseTarget.z,
     );
     controls.update();
+    updates.forEach((update) => update(delta, time));
     dust.update(delta, time);
     renderer.render(scene, camera);
     if (resolveFirstFrame) {
@@ -234,5 +236,11 @@ export function createScene(container, models) {
     goPoint(camera, controls, namePosition, baseTarget);
   };
 
-  return { firstFrame, goToPoint };
+  const addUpdate = (update) => {
+    if (typeof update === 'function') {
+      updates.push(update);
+    }
+  };
+
+  return { firstFrame, goToPoint, scene, addUpdate };
 }

@@ -111,17 +111,25 @@ class MenuWindow extends HTMLElement {
       template.content.cloneNode(true),
     );
     this.actionsRoot = this.shadowRoot.querySelector('[data-actions]');
-    this.handleClick = (event) => {
+    this.getActionFromEvent = (event) => {
       const button = event.target.closest('button[data-id]');
       if (!button) {
-        return;
+        return null;
       }
       const action = actionsByMode[this.mode].find(
         (item) => item.id === button.dataset.id,
       );
       if (!action) {
+        return null;
+      }
+      return { action, button };
+    };
+    this.handleClick = (event) => {
+      const payload = this.getActionFromEvent(event);
+      if (!payload) {
         return;
       }
+      const { action } = payload;
       const menuListCategory = menuListByAction[action.id];
       if (menuListCategory) {
         this.dispatchEvent(
@@ -150,15 +158,49 @@ class MenuWindow extends HTMLElement {
         );
       }
     };
+    this.handlePointerOver = (event) => {
+      const payload = this.getActionFromEvent(event);
+      if (!payload) {
+        return;
+      }
+      const { action } = payload;
+      this.dispatchEvent(
+        new CustomEvent('menu-hover', {
+          detail: action.id,
+          bubbles: true,
+        }),
+      );
+    };
+    this.handlePointerOut = (event) => {
+      const payload = this.getActionFromEvent(event);
+      if (!payload) {
+        return;
+      }
+      const { action, button } = payload;
+      const related = event.relatedTarget;
+      if (related && button.contains(related)) {
+        return;
+      }
+      this.dispatchEvent(
+        new CustomEvent('menu-hover-out', {
+          detail: action.id,
+          bubbles: true,
+        }),
+      );
+    };
   }
 
   connectedCallback() {
     this.renderActions();
     this.shadowRoot.addEventListener('click', this.handleClick);
+    this.shadowRoot.addEventListener('pointerover', this.handlePointerOver);
+    this.shadowRoot.addEventListener('pointerout', this.handlePointerOut);
   }
 
   disconnectedCallback() {
     this.shadowRoot.removeEventListener('click', this.handleClick);
+    this.shadowRoot.removeEventListener('pointerover', this.handlePointerOver);
+    this.shadowRoot.removeEventListener('pointerout', this.handlePointerOut);
   }
 
   renderActions() {

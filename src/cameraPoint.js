@@ -1,6 +1,6 @@
 import { Vector3 } from 'three';
 import { gsap } from 'gsap';
-const pointCameraPosition = {
+export const pointCameraPosition = {
   main: {
     position: { x: -1, y: 2, z: 5.5 },
     target: { x: -4, y: 1, z: 0 },
@@ -8,7 +8,7 @@ const pointCameraPosition = {
 
   menu: {
     position: { x: -2.4, y: 1.4, z: 0 },
-    target: { x: -3, y: 1.2, z: 0 },
+    target: { x: -3, y: 1.1, z: 0 },
   },
   
   beer: {

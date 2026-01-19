@@ -12,8 +12,8 @@ const actionsByMode = {
     { id: 'barmen', label: 'Бармен', target: 'barmen', nextMode: 'barmen' },
   ],
   menu: [
-    { id: 'beer', label: 'Пиво', target: 'beer' },
-    { id: 'food', label: 'Еда', target: 'eat' },
+    { id: 'beer', label: 'Пиво', target: 'menu' },
+    { id: 'food', label: 'Еда', target: 'menu' },
     { id: 'snacks', label: 'Закуски', target: 'menu' },
     backToMain,
   ],

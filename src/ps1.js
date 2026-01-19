@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { SimplifyModifier } from 'three/addons/modifiers/SimplifyModifier.js';
-const newMaterial = new THREE.MeshStandardMaterial()
+const newMaterial = new THREE.MeshStandardMaterial();
 function applyPS1TextureFilters(material) {
   const textureKeys = [
     'map',
@@ -19,7 +19,7 @@ function applyPS1TextureFilters(material) {
   });
 }
 
-function createPS1Material(baseMaterial) {
+function createPS1Material(baseMaterial, value) {
   const ps1Material = baseMaterial.clone();
   ps1Material.flatShading = true;
   ps1Material.roughness = 1;
@@ -32,7 +32,7 @@ function createPS1Material(baseMaterial) {
       `
         vec4 mvPosition = modelViewMatrix * vec4( transformed, 1.0 );
         vec4 projected = projectionMatrix * mvPosition;
-        float snapScale = 60.0;
+        float snapScale = ${value};
         projected.xy = floor(projected.xy * snapScale) / snapScale;
         gl_Position = projected;
       `,
@@ -65,12 +65,14 @@ function createPS1Material(baseMaterial) {
   return ps1Material;
 }
 
-export function applyPS1Style(object3d) {
+export function applyPS1Style(object3d, value = '60.0') {
   object3d.traverse((child) => {
     if (!child.isMesh) return;
     if (!child.material) return;
     const toPs1 = (material) =>
-      material && material.isMaterial ? createPS1Material(material) : material;
+      material && material.isMaterial
+        ? createPS1Material(material, value)
+        : material;
     child.material = Array.isArray(child.material)
       ? child.material.map(toPs1)
       : toPs1(child.material);
@@ -82,7 +84,7 @@ export function applyLowPoly(object3d, reduction = 0.1, minVertices = 200) {
   object3d.traverse((child) => {
     if (!child.isMesh) return;
     if (!child.geometry || !child.geometry.attributes?.position) return;
-    
+
     const count = child.geometry.attributes.position.count;
     if (count < minVertices) return;
     const remove = Math.floor(count * reduction);

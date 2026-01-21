@@ -48,7 +48,7 @@ export function createScene(container, models) {
   lampDj.forEach((item) => {
     const { x, y, z } = item.position;
     let pointlight;
-    pointlight = new THREE.PointLight(0xffd2a1, 0.8, 3.5);
+    pointlight = new THREE.PointLight(0xffd2a1, 0.3, 3.5);
     pointlight.position.set(x, y - 1.6, z);
     pointlight.shadow.mapSize.set(256, 256);
     pointlight.castShadow = true;

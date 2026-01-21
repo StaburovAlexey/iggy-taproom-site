@@ -13,24 +13,35 @@ const peopleModelsConfig = [
     receiveShadow: false,
     enabled: true,
   },
-   {
+  {
     id: 'person_02',
     path: '/model/body1.glb',
     position: { x: 3.6, y: 0.2, z: 0 },
     rotation: { x: 0, y: Math.PI * -0.5, z: 0 },
     scale: { x: 0.95, y: 0.95, z: 0.95 },
-    animation: { name: 'dj', speed: 1 },
+    animation: { name: 'dj', speed: 2 },
     castShadow: true,
     receiveShadow: false,
     enabled: true,
   },
-     {
+  {
     id: 'person_03',
     path: '/model/body1.glb',
     position: { x: 1.5, y: 0, z: -2.3 },
     rotation: { x: 0, y: Math.PI * -0.5, z: 0 },
     scale: { x: 0.95, y: 0.95, z: 0.95 },
-    animation: { name: 'seet', speed: 1 },
+    animation: { name: 'seet', speed: 1.5 },
+    castShadow: true,
+    receiveShadow: false,
+    enabled: true,
+  },
+  {
+    id: 'person_04',
+    path: '/model/body1.glb',
+    position: { x: -0.5, y: 0.35, z: -1.6 },
+    rotation: { x: 0, y: Math.PI * 0.5, z: 0 },
+    scale: { x: 0.95, y: 0.95, z: 0.95 },
+    animation: { name: 'seet', speed: 0 },
     castShadow: true,
     receiveShadow: false,
     enabled: true,
@@ -110,7 +121,7 @@ function createAnimation(model, animations, config) {
 async function createPersonModel(config) {
   const gltf = await loadGLTF(config.path);
   const model = gltf.scene;
- 
+
   console.log('person', gltf);
   const id = config.id || model.name || config.path;
   model.name = id;

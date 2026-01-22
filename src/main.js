@@ -9,6 +9,7 @@ import { loadBar } from './models.js';
 import { applyLowPoly, applyPS1Style } from './ps1.js';
 import { pointCameraPosition } from './cameraPoint.js';
 import { createMenuHoverModels } from './menuHoverModels.js';
+import { createPeopleModels } from './peopleModels.js';
 
 
 const app = document.body;
@@ -20,6 +21,9 @@ const models = await loadBar()
 applyLowPoly(models.bar, 0.01, 1500);
 applyPS1Style(models.bar);
 const { firstFrame, goToPoint, scene, addUpdate } = createScene(app, models);
+const peopleModels = await createPeopleModels(scene);
+applyPS1Style(peopleModels.group, '300.0');
+addUpdate(peopleModels.update);
 const menuTarget = pointCameraPosition.menu.target;
 const menuHoverModels = await createMenuHoverModels(scene, menuTarget);
 addUpdate(menuHoverModels.update);

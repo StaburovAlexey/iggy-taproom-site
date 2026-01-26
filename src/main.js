@@ -10,6 +10,7 @@ import { applyLowPoly, applyPS1Style } from './ps1.js';
 import { pointCameraPosition } from './cameraPoint.js';
 import { createMenuHoverModels } from './menuHoverModels.js';
 import { createPeopleModels } from './peopleModels.js';
+import { warmupScene } from './warmup.js';
 
 const app = document.body;
 const preloader = document.createElement('app-preloader');
@@ -26,7 +27,7 @@ const menuHoverPromise = createMenuHoverModels(null, menuTarget);
 const models = await barPromise;
 applyLowPoly(models.bar, 0.01, 1500);
 applyPS1Style(models.bar);
-const { firstFrame, goToPoint, scene, addUpdate } = createScene(app, models);
+const { firstFrame, goToPoint, scene, addUpdate, renderer, camera } = createScene(app, models);
 const [peopleModels, menuHoverModels] = await Promise.all([
   peoplePromise,
   menuHoverPromise,
@@ -40,6 +41,7 @@ if (menuHoverModels?.group) {
 applyPS1Style(peopleModels.group, '500.0');
 addUpdate(peopleModels.update);
 addUpdate(menuHoverModels.update);
+await warmupScene(renderer, scene, camera, [menuHoverModels?.group]);
 await Promise.all([loadingDone, firstFrame]);
 const menuWindow = document.createElement('menu-window');
 const menuListWindow = document.createElement('menu-list-window');

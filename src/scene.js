@@ -242,5 +242,5 @@ export function createScene(container, models) {
     }
   };
 
-  return { firstFrame, goToPoint, scene, addUpdate };
+  return { firstFrame, goToPoint, scene, addUpdate, renderer, camera };
 }

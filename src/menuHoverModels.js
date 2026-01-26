@@ -29,7 +29,9 @@ function loadModel(path) {
 export async function createMenuHoverModels(scene, target) {
   const group = new THREE.Group();
   group.position.set(target.x, target.y, target.z);
-  scene.add(group);
+  if (scene?.add) {
+    scene.add(group);
+  }
   const entries = await Promise.all(
     Object.entries(menuModelConfig).map(async ([key, config]) => {
       const model = await loadModel(config.path);
@@ -82,5 +84,5 @@ export async function createMenuHoverModels(scene, target) {
     model.rotation.y += delta * rotationSpeed;
   };
 
-  return { show, hide, update };
+  return { group, show, hide, update };
 }

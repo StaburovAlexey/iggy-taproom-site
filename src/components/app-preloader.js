@@ -38,16 +38,15 @@ template.innerHTML = `
 
     .fill {
       height: 100%;
-      width: 35%;
+      width: 0%;
       border-radius: inherit;
       background: linear-gradient(90deg, #ffb14a, #ffd394, #ffb14a);
-      animation: loading 1.6s ease-in-out infinite;
+      transition: width 0.2s ease;
     }
 
-    @keyframes loading {
-      0% { transform: translateX(-120%); }
-      50% { transform: translateX(50%); }
-      100% { transform: translateX(220%); }
+    .value {
+      font-size: 11px;
+      opacity: 0.8;
     }
   </style>
   <div class="panel">
@@ -55,6 +54,7 @@ template.innerHTML = `
     <div class="bar">
       <div class="fill"></div>
     </div>
+    <div class="value">0%</div>
   </div>
 `
 
@@ -62,6 +62,20 @@ class AppPreloader extends HTMLElement {
   constructor() {
     super()
     this.attachShadow({ mode: 'open' }).appendChild(template.content.cloneNode(true))
+    this.fill = this.shadowRoot.querySelector('.fill')
+    this.value = this.shadowRoot.querySelector('.value')
+    this.setProgress(0)
+  }
+
+  setProgress(progress) {
+    const safe = Number.isFinite(progress) ? Math.min(Math.max(progress, 0), 1) : 0
+    const percent = Math.round(safe * 100)
+    if (this.fill) {
+      this.fill.style.width = `${percent}%`
+    }
+    if (this.value) {
+      this.value.textContent = `${percent}%`
+    }
   }
 
   hide() {

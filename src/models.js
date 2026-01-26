@@ -25,6 +25,7 @@ function createWindowGradient() {
 }
 const gradientTex = createWindowGradient();
 export function loadBar() {
+  const texturesPromise = loadTexturesMap();
   return new Promise((resolve, reject) => {
     loaderGLB.load(
       '/model/BAR.glb',
@@ -35,7 +36,7 @@ export function loadBar() {
         const lampTable = [];
         const lampCenter = [];
         const signLights = [];
-        const textures = await loadTexturesMap();
+        const textures = await texturesPromise;
         const {
           brickWall_diff,
           interior_tiles_diff,

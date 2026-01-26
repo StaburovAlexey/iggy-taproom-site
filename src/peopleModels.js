@@ -4,7 +4,7 @@ import { loaderGLB } from './loaderTextureAndModel.js';
 const peopleModelsConfig = [
   {
     id: 'person_01',
-    path: '/model/body-tex.glb',
+    path: '/model/body-barmen.glb',
     position: { x: -3.8, y: 0, z: 1 },
     rotation: { x: 0, y: Math.PI * 0.5, z: 0 },
     scale: { x: 0.95, y: 0.95, z: 0.95 },
@@ -15,7 +15,7 @@ const peopleModelsConfig = [
   },
   {
     id: 'person_02',
-    path: '/model/body1.glb',
+    path: '/model/body-dj.glb',
     position: { x: 3.6, y: 0.2, z: 0 },
     rotation: { x: 0, y: Math.PI * -0.5, z: 0 },
     scale: { x: 0.95, y: 0.95, z: 0.95 },

@@ -6,8 +6,8 @@ function rand(min, max) {
 
 export function createDust(scene, options = {}) {
   const {
-    count = 180,
-    center = { x: 0, y: 1.6, z: 0 },
+    count = 90,
+    center = { x: 0, y: 1.2, z: 0 },
     area = { x: 11, y: 4, z: 7 },
     size = 0.02,
     opacity = 0.25,

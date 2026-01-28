@@ -1,16 +1,25 @@
 import { Vector3 } from 'three';
 import { gsap } from 'gsap';
+
 export const pointCameraPosition = {
   main: {
     position: { x: -1, y: 2, z: 5.5 },
     target: { x: -4, y: 1, z: 0 },
+    limits: {
+      minDistance: 2,
+      maxDistance: 5.5,
+      minPolarAngle: 1.25,
+      maxPolarAngle: 1.65,
+      minAzimuthAngle: 0.25,
+      maxAzimuthAngle: 1,
+    },
   },
 
   menu: {
     position: { x: -2.4, y: 1.4, z: 0 },
     target: { x: -3, y: 1.1, z: 0 },
   },
-  
+
   beer: {
     position: { x: -2.4, y: 1.4, z: 0 },
     target: { x: -3, y: 1.6, z: 0 },
@@ -31,10 +40,40 @@ export const pointCameraPosition = {
   },
 };
 
-export function goPoint(camera, controls, namePosition, baseTarget = controls.target) {
-  const target = pointCameraPosition[namePosition].target;
+function applyControlsLimits(controls, limits = {}) {
+  const state = controls.userData || {};
+  if (!state.baseLimits) {
+    state.baseLimits = {
+      minDistance: controls.minDistance,
+      maxDistance: controls.maxDistance,
+      minPolarAngle: controls.minPolarAngle,
+      maxPolarAngle: controls.maxPolarAngle,
+      minAzimuthAngle: controls.minAzimuthAngle,
+      maxAzimuthAngle: controls.maxAzimuthAngle,
+    };
+    controls.userData = state;
+  }
+  const base = state.baseLimits;
+  controls.minDistance = limits.minDistance ?? base.minDistance;
+  controls.maxDistance = limits.maxDistance ?? base.maxDistance;
+  controls.minPolarAngle = limits.minPolarAngle ?? base.minPolarAngle;
+  controls.maxPolarAngle = limits.maxPolarAngle ?? base.maxPolarAngle;
+  controls.minAzimuthAngle = limits.minAzimuthAngle ?? base.minAzimuthAngle;
+  controls.maxAzimuthAngle = limits.maxAzimuthAngle ?? base.maxAzimuthAngle;
+  controls.update();
+}
+
+export function goPoint(
+  camera,
+  controls,
+  namePosition,
+  baseTarget = controls.target,
+) {
+  const pointConfig = pointCameraPosition[namePosition];
+  const target = pointConfig.target;
   const targetVector = new Vector3(target.x, target.y, target.z);
-  const point = pointCameraPosition[namePosition].position;
+  const point = pointConfig.position;
+  applyControlsLimits(controls, pointConfig.limits);
   gsap.to(camera.position, {
     x: point.x,
     y: point.y,

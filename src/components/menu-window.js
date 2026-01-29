@@ -17,7 +17,14 @@ const actionsByMode = {
     { id: 'snacks', label: 'Закуски', target: 'menu' },
     backToMain,
   ],
-  activity: [backToMain],
+  activity: [
+    { id: 'music', label: 'Выбрать музыку', target: 'music', nextMode: 'music' },
+    backToMain,
+  ],
+  music: [
+    { id: 'activity', label: 'Мероприятия', target: 'activity', nextMode: 'activity' },
+    backToMain,
+  ],
   barmen: [backToMain],
 };
 

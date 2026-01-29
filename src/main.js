@@ -3,6 +3,8 @@ import './components/menu-panel.js';
 import './components/app-preloader.js';
 import './components/menu-window.js';
 import './components/menu-list-window.js';
+import './components/activity-window.js';
+import './components/music-list-window.js';
 import { createScene } from './scene.js';
 import { loadingDone, onLoadingProgress } from './loaderTextureAndModel.js';
 import { loadBar } from './models.js';
@@ -11,6 +13,7 @@ import { pointCameraPosition } from './cameraPoint.js';
 import { createMenuHoverModels } from './menuHoverModels.js';
 import { createPeopleModels } from './peopleModels.js';
 import { warmupScene } from './warmup.js';
+import { musicTracks } from './data/musicList.js';
 
 const app = document.body;
 const preloader = document.createElement('app-preloader');
@@ -45,10 +48,39 @@ await warmupScene(renderer, scene, camera, [menuHoverModels?.group]);
 await Promise.all([loadingDone, firstFrame]);
 const menuWindow = document.createElement('menu-window');
 const menuListWindow = document.createElement('menu-list-window');
+const activityWindow = document.createElement('activity-window');
+const musicListWindow = document.createElement('music-list-window');
 let currentPoint = 'main';
+const musicAudio = new Audio();
+musicAudio.loop = true;
+const baseUrl = import.meta.env.BASE_URL ?? '/';
+let defaultTrack = musicTracks.find(
+  (track) =>
+    track.title.trim().toLowerCase() === 'country' ||
+    track.file.trim().toLowerCase().includes('country'),
+);
+if (!defaultTrack && musicTracks.length > 0) {
+  defaultTrack = musicTracks[0];
+}
+if (defaultTrack) {
+  const src = `${baseUrl}music/${defaultTrack.file}`;
+  musicAudio.src = src;
+  musicListWindow.setActiveTrack(defaultTrack);
+  musicAudio.play().catch(() => {});
+}
 menuWindow.addEventListener('navigate', (event) => {
   currentPoint = event.detail;
   goToPoint(event.detail);
+  if (currentPoint === 'activity') {
+    activityWindow.open();
+  } else {
+    activityWindow.close();
+  }
+  if (currentPoint === 'music') {
+    musicListWindow.open();
+  } else {
+    musicListWindow.close();
+  }
   if (currentPoint !== 'menu') {
     menuHoverModels.hide();
   }
@@ -57,6 +89,17 @@ menuWindow.addEventListener('menu-list-open', (event) =>
   menuListWindow.open(event.detail),
 );
 menuWindow.addEventListener('menu-list-close', () => menuListWindow.close());
+musicListWindow.addEventListener('music-select', (event) => {
+  const { src } = event.detail;
+  if (!src) {
+    return;
+  }
+  if (musicAudio.src !== src) {
+    musicAudio.src = src;
+  }
+  musicAudio.play().catch(() => {});
+  musicListWindow.setActiveTrack(event.detail);
+});
 menuWindow.addEventListener('menu-hover', (event) => {
   if (currentPoint !== 'menu') {
     return;
@@ -66,5 +109,7 @@ menuWindow.addEventListener('menu-hover', (event) => {
 menuWindow.addEventListener('menu-hover-out', () => menuHoverModels.hide());
 document.body.appendChild(menuWindow);
 document.body.appendChild(menuListWindow);
+document.body.appendChild(activityWindow);
+document.body.appendChild(musicListWindow);
 stopProgress();
 preloader.hide();

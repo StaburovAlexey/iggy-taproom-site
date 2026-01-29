@@ -5,34 +5,33 @@ export const pointCameraPosition = {
   main: {
     position: { x: -1, y: 2, z: 5.5 },
     target: { x: -4, y: 1, z: 0 },
-    limits: {
-      minDistance: 2,
-      maxDistance: 5.5,
-      minPolarAngle: 1.25,
-      maxPolarAngle: 1.65,
-      minAzimuthAngle: 0.25,
-      maxAzimuthAngle: 1,
-    },
   },
 
   menu: {
     position: { x: -2.4, y: 1.4, z: 0 },
     target: { x: -3, y: 1.1, z: 0 },
+
   },
 
   beer: {
     position: { x: -2.4, y: 1.4, z: 0 },
     target: { x: -3, y: 1.6, z: 0 },
+
   },
   eat: {
     position: { x: -2.4, y: 1.4, z: 1 },
     target: { x: -3, y: 1.65, z: 1.2 },
+ 
   },
   activity: {
     position: { x: 3.5, y: 1.8, z: 1.8 },
     target: { x: 0.5, y: 0, z: -1.4 },
     // position: { x:-0.5, y: 2, z: 3.5 },
     // target: { x: 2, y: 1, z: 1 },
+  },
+  music: {
+    position: { x: 0, y: 1.8, z: 1.5 },
+    target: { x: 4.5, y: 1, z: -1 },
   },
   barmen: {
     position: { x: -2.2, y: 1.5, z: 0.6 },

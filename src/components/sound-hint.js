@@ -22,6 +22,7 @@ template.innerHTML = `
     .badge {
       display: grid;
       gap: 6px;
+      max-width: 240px;
       padding: 12px 16px;
       border-radius: 8px;
       background:
@@ -40,7 +41,7 @@ template.innerHTML = `
     }
 
     .message {
-      font-size: 11px;
+      font-size: 8px;
       letter-spacing: 0.1em;
     }
 
@@ -75,7 +76,7 @@ template.innerHTML = `
   </style>
   <div class="badge">
     <div class="label">Звук</div>
-    <div class="message">Включите звук, чтобы атмосфера звучала</div>
+    <div class="message">Разрешите проигрывание звука в настройках, чтобы атмосфера звучала</div>
     <button type="button" data-action>Включить</button>
   </div>
 `;

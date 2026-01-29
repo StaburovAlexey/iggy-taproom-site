@@ -191,7 +191,7 @@ export function createScene(container, models) {
   baseTarget.copy(controls.target);
   const clock = new THREE.Clock();
   controls.update();
-  controls.enabled = true;
+  controls.enabled = false;
   goPoint(camera, controls, 'main', baseTarget);
   const stats = new Stats();
   stats.dom.classList.add('stats');

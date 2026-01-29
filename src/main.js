@@ -5,6 +5,7 @@ import './components/menu-window.js';
 import './components/menu-list-window.js';
 import './components/activity-window.js';
 import './components/music-list-window.js';
+import './components/sound-hint.js';
 import { createScene } from './scene.js';
 import { loadingDone, onLoadingProgress } from './loaderTextureAndModel.js';
 import { loadBar } from './models.js';
@@ -50,6 +51,7 @@ const menuWindow = document.createElement('menu-window');
 const menuListWindow = document.createElement('menu-list-window');
 const activityWindow = document.createElement('activity-window');
 const musicListWindow = document.createElement('music-list-window');
+const soundHint = document.createElement('sound-hint');
 let currentPoint = 'main';
 const musicAudio = new Audio();
 musicAudio.loop = true;
@@ -62,11 +64,24 @@ let defaultTrack = musicTracks.find(
 if (!defaultTrack && musicTracks.length > 0) {
   defaultTrack = musicTracks[0];
 }
+const tryPlayMusic = () => {
+  if (!musicAudio.src) {
+    return Promise.resolve();
+  }
+  musicAudio.muted = false;
+  return musicAudio.play().then(() => {
+    soundHint.close();
+  }).catch((error) => {
+    soundHint.open();
+    throw error;
+  });
+};
+
 if (defaultTrack) {
   const src = `${baseUrl}music/${defaultTrack.file}`;
   musicAudio.src = src;
   musicListWindow.setActiveTrack(defaultTrack);
-  musicAudio.play().catch(() => {});
+  tryPlayMusic().catch(() => {});
 }
 menuWindow.addEventListener('navigate', (event) => {
   currentPoint = event.detail;
@@ -97,7 +112,7 @@ musicListWindow.addEventListener('music-select', (event) => {
   if (musicAudio.src !== src) {
     musicAudio.src = src;
   }
-  musicAudio.play().catch(() => {});
+  tryPlayMusic().catch(() => {});
   musicListWindow.setActiveTrack(event.detail);
 });
 menuWindow.addEventListener('menu-hover', (event) => {
@@ -111,5 +126,10 @@ document.body.appendChild(menuWindow);
 document.body.appendChild(menuListWindow);
 document.body.appendChild(activityWindow);
 document.body.appendChild(musicListWindow);
+document.body.appendChild(soundHint);
 stopProgress();
 preloader.hide();
+
+soundHint.addEventListener('sound-request', () => {
+  tryPlayMusic().catch(() => {});
+});

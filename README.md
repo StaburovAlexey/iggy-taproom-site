@@ -40,10 +40,6 @@ iggy-taproom — интерактивная сцена бара на Three.js с
 
 ## 📊 Google Lighthouse
 
-Отчёты: `lighthouse-desctop.json` и `lighthouse-mobile.json`.
-
-Дата прогонов: 1 февраля 2026 (UTC), URL `http://localhost:4173/`.
-
 ### 🖥️ Desktop
 
 - Performance: 70

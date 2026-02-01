@@ -6,14 +6,8 @@ import './components/menu-list-window.js';
 import './components/activity-window.js';
 import './components/music-list-window.js';
 import './components/sound-hint.js';
-import { createScene } from './scene.js';
 import { loadingDone, onLoadingProgress } from './loaderTextureAndModel.js';
-import { loadBar } from './models.js';
-import { applyLowPoly, applyPS1Style } from './ps1.js';
 import { pointCameraPosition } from './cameraPoint.js';
-import { createMenuHoverModels } from './menuHoverModels.js';
-import { createPeopleModels } from './peopleModels.js';
-import { warmupScene } from './warmup.js';
 import { musicTracks } from './data/musicList.js';
 import { isSmallScreen, subscribeSmallScreen } from './utils/screen.js';
 
@@ -25,9 +19,6 @@ const stopProgress = onLoadingProgress((state) =>
 );
 
 const menuTarget = { x: -3, y: 1.1, z: 0.7 };
-const barPromise = loadBar();
-const peoplePromise = createPeopleModels();
-const menuHoverPromise = createMenuHoverModels(null, menuTarget);
 
 const menuWindow = document.createElement('menu-window');
 const menuListWindow = document.createElement('menu-list-window');
@@ -84,10 +75,28 @@ const tryPlayMusic = () => {
 };
 
 async function init() {
+  const [
+    { createScene },
+    { loadBar },
+    { applyLowPoly, applyPS1Style },
+    { createMenuHoverModels },
+    { createPeopleModels },
+    { warmupScene },
+  ] = await Promise.all([
+    import('./scene.js'),
+    import('./models.js'),
+    import('./ps1.js'),
+    import('./menuHoverModels.js'),
+    import('./peopleModels.js'),
+    import('./warmup.js'),
+  ]);
+  const barPromise = loadBar();
+  const peoplePromise = createPeopleModels();
+  const menuHoverPromise = createMenuHoverModels(null, menuTarget);
   const models = await barPromise;
   applyLowPoly(models.bar, 0.01, 1500);
   applyPS1Style(models.bar);
-  const { firstFrame, goToPoint, scene, addUpdate, renderer, camera } = createScene(app, models);
+  const { firstFrame, goToPoint, scene, addUpdate, renderer, camera } = await createScene(app, models);
   const [peopleModels, menuHoverModels] = await Promise.all([
     peoplePromise,
     menuHoverPromise,

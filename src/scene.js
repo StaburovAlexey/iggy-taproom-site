@@ -1,11 +1,10 @@
 import * as THREE from 'three';
-import Stats from 'stats.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { goPoint } from './cameraPoint.js';
 import { createDust } from './dust.js';
 import { isSmallScreen, subscribeSmallScreen } from './utils/screen.js';
 
-export function createScene(container, models) {
+export async function createScene(container, models) {
   const { bar, lampBar, lampDj, lampTable, lampCenter, signLights } = models;
   let resolveFirstFrame;
   const firstFrame = new Promise((resolve) => {
@@ -201,9 +200,13 @@ export function createScene(container, models) {
   controls.update();
   controls.enabled = false;
   goPoint(camera, controls, 'main', baseTarget);
-  const stats = new Stats();
-  stats.dom.classList.add('stats');
-  container.appendChild(stats.dom);
+  let stats = null;
+  if (import.meta.env.DEV) {
+    const { default: Stats } = await import('stats.js');
+    stats = new Stats();
+    stats.dom.classList.add('stats');
+    container.appendChild(stats.dom);
+  }
 
   function onResize() {
     const width = container.clientWidth;
@@ -225,7 +228,9 @@ export function createScene(container, models) {
   });
 
   function animate() {
-    stats.begin();
+    if (stats) {
+      stats.begin();
+    }
     const delta = clock.getDelta();
     const time = clock.elapsedTime;
     const wobbleX = Math.sin(time * 0.3) * 0.008;
@@ -243,7 +248,9 @@ export function createScene(container, models) {
       resolveFirstFrame();
       resolveFirstFrame = null;
     }
-    stats.end();
+    if (stats) {
+      stats.end();
+    }
     requestAnimationFrame(animate);
   }
 

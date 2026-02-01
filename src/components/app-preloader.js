@@ -29,26 +29,110 @@ template.innerHTML = `
       font-size: 12px;
     }
 
-    ::slotted(.logo) {
-      width: min(220px, 60vw);
+    .logo-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: min(240px, 62vw);
       margin: 0 auto;
-      display: block;
-      animation: logoPulse 1.6s ease-in-out infinite;
-      height: auto;
     }
 
-    @keyframes logoPulse {
+    .logo-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -10%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 211, 148, 0.65), rgba(255, 177, 74, 0.15), transparent 65%);
+      filter: blur(26px);
+      opacity: 0.7;
+      animation: haloPulse 3.2s ease-in-out infinite;
+    }
+
+    ::slotted(.logo) {
+      width: 100%;
+      display: block;
+      animation: logoFloat 2.4s ease-in-out infinite, logoGlow 3.6s ease-in-out infinite, logoJitter 1.2s steps(2, end) infinite;
+      height: auto;
+      filter: drop-shadow(0 10px 28px rgba(255, 186, 92, 0.25));
+      will-change: transform, filter, opacity;
+    }
+
+    @keyframes logoFloat {
       0% {
-        transform: scale(1);
-        opacity: 0.75;
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 0.8;
       }
       50% {
-        transform: scale(1.04);
+        transform: translateY(-8px) scale(1.03) rotate(-1deg);
         opacity: 1;
       }
       100% {
-        transform: scale(1);
-        opacity: 0.75;
+        transform: translateY(0) scale(1) rotate(0deg);
+        opacity: 0.8;
+      }
+    }
+
+    @keyframes logoGlow {
+      0% {
+        filter: drop-shadow(0 10px 28px rgba(255, 186, 92, 0.2));
+      }
+      50% {
+        filter: drop-shadow(0 14px 34px rgba(255, 204, 130, 0.45));
+      }
+      100% {
+        filter: drop-shadow(0 10px 28px rgba(255, 186, 92, 0.2));
+      }
+    }
+
+    @keyframes logoJitter {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      12% {
+        transform: translate3d(0.6px, -0.4px, 0) scale(1.002);
+      }
+      24% {
+        transform: translate3d(-0.5px, 0.3px, 0) scale(0.999);
+      }
+      36% {
+        transform: translate3d(0.4px, 0.6px, 0) scale(1.001);
+      }
+      48% {
+        transform: translate3d(-0.6px, -0.3px, 0) scale(1);
+      }
+      60% {
+        transform: translate3d(0.3px, -0.6px, 0) scale(1.002);
+      }
+      72% {
+        transform: translate3d(-0.4px, 0.5px, 0) scale(0.999);
+      }
+      84% {
+        transform: translate3d(0.5px, -0.2px, 0) scale(1.001);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    @keyframes haloPulse {
+      0% {
+        transform: scale(0.98);
+        opacity: 0.6;
+      }
+      50% {
+        transform: scale(1.05);
+        opacity: 0.95;
+      }
+      100% {
+        transform: scale(0.98);
+        opacity: 0.6;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .logo-wrap::before,
+      ::slotted(.logo) {
+        animation: none;
       }
     }
 
@@ -73,7 +157,9 @@ template.innerHTML = `
     }
   </style>
   <div class="panel">
-    <slot name="logo"></slot>
+    <div class="logo-wrap">
+      <slot name="logo"></slot>
+    </div>
     <div>Загрузка</div>
     <div class="bar">
       <div class="fill"></div>

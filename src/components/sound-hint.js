@@ -7,16 +7,16 @@ template.innerHTML = `
       top: 16px;
       right: 16px;
       z-index: 20;
-      display: none;
-      pointer-events: none;
+      display: flex;
+      pointer-events: auto;
       font-family: "Press Start 2P", "VT323", "Fira Sans", "Segoe UI", sans-serif;
       text-transform: uppercase;
       color: #f2efe8;
     }
 
-    :host([data-open]) {
-      display: flex;
-      pointer-events: auto;
+    :host([data-closed]) {
+      display: none;
+      pointer-events: none;
     }
 
     .badge {
@@ -107,11 +107,11 @@ class SoundHint extends HTMLElement {
   }
 
   open() {
-    this.setAttribute('data-open', '');
+    this.removeAttribute('data-closed');
   }
 
   close() {
-    this.removeAttribute('data-open');
+    this.setAttribute('data-closed', '');
   }
 }
 

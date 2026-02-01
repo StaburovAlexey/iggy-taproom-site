@@ -29,11 +29,12 @@ template.innerHTML = `
       font-size: 12px;
     }
 
-    .logo {
+    ::slotted(.logo) {
       width: min(220px, 60vw);
       margin: 0 auto;
       display: block;
       animation: logoPulse 1.6s ease-in-out infinite;
+      height: auto;
     }
 
     @keyframes logoPulse {
@@ -72,7 +73,7 @@ template.innerHTML = `
     }
   </style>
   <div class="panel">
-    <img class="logo" src="${import.meta.env.BASE_URL ?? '/'}logo.png" alt="Iggy bar" />
+    <slot name="logo"></slot>
     <div>Загрузка</div>
     <div class="bar">
       <div class="fill"></div>

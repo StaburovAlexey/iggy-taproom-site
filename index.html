@@ -3,6 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Iggy Taproom — 3D-бар для интерактивного меню, атмосферы и анонсов мероприятий."
+    />
+    <link rel="preload" as="image" href="/logo.png" fetchpriority="high" />
     <link rel="icon" href="/favicon/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
@@ -11,6 +16,19 @@
     <title>iggy-taproom</title>
   </head>
   <body>
+    <app-preloader>
+      <img
+        slot="logo"
+        class="logo"
+        src="/logo.png"
+        alt="Iggy bar"
+        width="440"
+        height="440"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </app-preloader>
+    <main id="app"></main>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

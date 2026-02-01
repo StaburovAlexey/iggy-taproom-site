@@ -7,13 +7,29 @@ import './components/activity-window.js';
 import './components/music-list-window.js';
 import './components/sound-hint.js';
 import { loadingDone, onLoadingProgress } from './loaderTextureAndModel.js';
-import { pointCameraPosition } from './cameraPoint.js';
 import { musicTracks } from './data/musicList.js';
 import { isSmallScreen, subscribeSmallScreen } from './utils/screen.js';
 
-const app = document.body;
-const preloader = document.createElement('app-preloader');
-document.body.appendChild(preloader);
+const baseUrl = import.meta.env.BASE_URL ?? '/';
+const app = document.querySelector('main#app') ?? document.body;
+const preloader =
+  document.querySelector('app-preloader') ?? document.createElement('app-preloader');
+if (!preloader.isConnected) {
+  document.body.appendChild(preloader);
+}
+const preloaderLogo = preloader.querySelector('img.logo');
+if (!preloaderLogo) {
+  const logo = document.createElement('img');
+  logo.className = 'logo';
+  logo.setAttribute('slot', 'logo');
+  logo.src = `${baseUrl}logo.png`;
+  logo.alt = 'Iggy bar';
+  logo.width = 440;
+  logo.height = 440;
+  logo.setAttribute('fetchpriority', 'high');
+  logo.decoding = 'async';
+  preloader.appendChild(logo);
+}
 const stopProgress = onLoadingProgress((state) =>
   preloader.setProgress(state.progress),
 );
@@ -48,7 +64,7 @@ subscribeSmallScreen(updateResponsiveLayout);
 let currentPoint = 'main';
 const musicAudio = new Audio();
 musicAudio.loop = true;
-const baseUrl = import.meta.env.BASE_URL ?? '/';
+musicAudio.preload = 'none';
 let defaultTrack = musicTracks.find(
   (track) =>
     track.title.trim().toLowerCase() === 'country' ||
@@ -57,6 +73,18 @@ let defaultTrack = musicTracks.find(
 if (!defaultTrack && musicTracks.length > 0) {
   defaultTrack = musicTracks[0];
 }
+
+let musicActivated = false;
+const setTrackSource = (track) => {
+  if (!track?.file) {
+    return false;
+  }
+  const src = `${baseUrl}music/${track.file}`;
+  if (musicAudio.src !== src) {
+    musicAudio.src = src;
+  }
+  return true;
+};
 
 const tryPlayMusic = () => {
   if (!musicAudio.src) {
@@ -72,6 +100,28 @@ const tryPlayMusic = () => {
       soundHint.open();
       throw error;
     });
+};
+
+const activateMusic = (track = defaultTrack) => {
+  if (!track) {
+    return;
+  }
+  musicActivated = true;
+  if (setTrackSource(track)) {
+    musicListWindow.setActiveTrack(track);
+  }
+  tryPlayMusic().catch(() => {});
+};
+
+const setupUserGesture = () => {
+  const handler = () => {
+    if (musicActivated) {
+      return;
+    }
+    activateMusic();
+  };
+  window.addEventListener('pointerdown', handler, { once: true });
+  window.addEventListener('keydown', handler, { once: true });
 };
 
 async function init() {
@@ -137,11 +187,11 @@ async function init() {
     if (!src) {
       return;
     }
+    musicActivated = true;
     if (musicAudio.src !== src) {
       musicAudio.src = src;
     }
     tryPlayMusic().catch(() => {});
-    musicListWindow.setActiveTrack(event.detail);
   });
   menuWindow.addEventListener('menu-hover', (event) => {
     if (currentPoint !== 'menu') {
@@ -152,20 +202,19 @@ async function init() {
   menuWindow.addEventListener('menu-hover-out', () => menuHoverModels.hide());
   menuWindow.addEventListener('menu-activity-poster', () => activityWindow.open());
 
+  setupUserGesture();
+
   if (defaultTrack) {
-    const src = `${baseUrl}music/${defaultTrack.file}`;
-    musicAudio.src = src;
     musicListWindow.setActiveTrack(defaultTrack);
-    tryPlayMusic().catch(() => {});
   }
 
-  document.body.appendChild(menuWindow);
-  document.body.appendChild(menuListWindow);
-  document.body.appendChild(activityWindow);
-  document.body.appendChild(musicListWindow);
-  document.body.appendChild(soundHint);
+  app.appendChild(menuWindow);
+  app.appendChild(menuListWindow);
+  app.appendChild(activityWindow);
+  app.appendChild(musicListWindow);
+  app.appendChild(soundHint);
   soundHint.addEventListener('sound-request', () => {
-    tryPlayMusic().catch(() => {});
+    activateMusic();
   });
   stopProgress();
   preloader.hide();

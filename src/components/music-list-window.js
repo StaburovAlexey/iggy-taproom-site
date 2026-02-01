@@ -21,6 +21,11 @@ template.innerHTML = `
       display: block;
     }
 
+    :host([data-compact]) {
+      top: 10px;
+      transform: translate(-50%, 0);
+    }
+
     .panel {
       display: grid;
       gap: 12px;
@@ -154,7 +159,7 @@ template.innerHTML = `
   <div class="panel">
     <div class="header">
       <div class="title">Музыка</div>
-      <button type="button" class="close" data-close>Назад</button>
+      <button type="button" class="close" data-close>Закрыть</button>
     </div>
     <div class="status">Сейчас играет: <span data-now>—</span></div>
     <div class="list" data-list></div>

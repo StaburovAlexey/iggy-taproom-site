@@ -1,4 +1,6 @@
-﻿const backToMain = {
+﻿import { isSmallScreen } from '../utils/screen.js';
+
+const backToMain = {
   id: 'back',
   label: 'Назад',
   target: 'main',
@@ -9,7 +11,6 @@ const actionsByMode = {
   main: [
     { id: 'menu', label: 'Меню', target: 'menu', nextMode: 'menu' },
     { id: 'activity', label: 'Мероприятия', target: 'activity', nextMode: 'activity' },
-    { id: 'barmen', label: 'Бармен', target: 'barmen', nextMode: 'barmen' },
   ],
   menu: [
     { id: 'beer', label: 'Пиво', target: 'menu' },
@@ -18,6 +19,7 @@ const actionsByMode = {
     backToMain,
   ],
   activity: [
+    { id: 'poster', label: 'Афиша', target: 'activity', nextMode: 'activity' },
     { id: 'music', label: 'Выбрать музыку', target: 'music', nextMode: 'music' },
     backToMain,
   ],
@@ -25,7 +27,6 @@ const actionsByMode = {
     { id: 'activity', label: 'Мероприятия', target: 'activity', nextMode: 'activity' },
     backToMain,
   ],
-  barmen: [backToMain],
 };
 
 const menuListByAction = {
@@ -46,6 +47,12 @@ template.innerHTML = `
       font-family: "Press Start 2P", "VT323", "Fira Sans", "Segoe UI", sans-serif;
       color: #f2efe8;
       text-transform: uppercase;
+    }
+
+    :host([data-compact]) {
+      bottom: 12px;
+      left: 50%;
+      transform: translate(-50%, 0);
     }
 
     .panel {
@@ -137,7 +144,31 @@ class MenuWindow extends HTMLElement {
         return;
       }
       const { action } = payload;
+      if (action.id === 'poster') {
+        this.dispatchEvent(
+          new CustomEvent('menu-activity-poster', {
+            bubbles: true,
+          }),
+        );
+      }
       const menuListCategory = menuListByAction[action.id];
+      if (isSmallScreen()) {
+        if (menuListCategory) {
+          this.dispatchEvent(
+            new CustomEvent('menu-hover', {
+              detail: action.id,
+              bubbles: true,
+            }),
+          );
+        } else {
+          this.dispatchEvent(
+            new CustomEvent('menu-hover-out', {
+              detail: action.id,
+              bubbles: true,
+            }),
+          );
+        }
+      }
       if (menuListCategory) {
         this.dispatchEvent(
           new CustomEvent('menu-list-open', {

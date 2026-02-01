@@ -23,11 +23,21 @@ template.innerHTML = `
       pointer-events: auto;
     }
 
+    :host([data-compact]) {
+      top: 10px;
+      left: 50%;
+   transform: translate(-55%, 0);
+      width: min(90vw, 410px);
+      max-height: 70vh;
+      padding: 0 10px;
+    }
+
     .panel {
+      width: 100%;
       display: grid;
       gap: 12px;
       padding: 16px;
-      width: min(420px, 90vw);
+     
       max-height: 90vh;
       border-radius: 6px;
       background:
@@ -99,7 +109,7 @@ template.innerHTML = `
   <div class="panel">
     <div class="header">
       <div class="title">Мероприятия</div>
-      <button type="button" class="close" data-close>Назад</button>
+      <button type="button" class="close" data-close>Закрыть</button>
     </div>
     <div class="activity">
       <img src="${activityImage}" alt="Анонс мероприятия" loading="lazy" />

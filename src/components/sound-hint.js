@@ -76,7 +76,7 @@ template.innerHTML = `
   </style>
   <div class="badge">
     <div class="label">Звук</div>
-    <div class="message">Разрешите проигрывание звука в настройках, чтобы атмосфера звучала</div>
+    <div class="message">Разрешите проигрывание звука в настройках и нажмите кнопку 'Включить', чтобы атмосфера звучала</div>
     <button type="button" data-action>Включить</button>
   </div>
 `;

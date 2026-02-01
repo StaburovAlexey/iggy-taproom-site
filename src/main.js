@@ -1,5 +1,5 @@
 import './style.css';
-import './components/menu-panel.js';
+
 import './components/app-preloader.js';
 import './components/menu-window.js';
 import './components/menu-list-window.js';
@@ -15,6 +15,7 @@ import { createMenuHoverModels } from './menuHoverModels.js';
 import { createPeopleModels } from './peopleModels.js';
 import { warmupScene } from './warmup.js';
 import { musicTracks } from './data/musicList.js';
+import { isSmallScreen, subscribeSmallScreen } from './utils/screen.js';
 
 const app = document.body;
 const preloader = document.createElement('app-preloader');
@@ -23,7 +24,7 @@ const stopProgress = onLoadingProgress((state) =>
   preloader.setProgress(state.progress),
 );
 
-const menuTarget = pointCameraPosition.menu.target;
+const menuTarget = { x: -3, y: 1.1, z: 0.7 };
 const barPromise = loadBar();
 const peoplePromise = createPeopleModels();
 const menuHoverPromise = createMenuHoverModels(null, menuTarget);
@@ -33,6 +34,26 @@ const menuListWindow = document.createElement('menu-list-window');
 const activityWindow = document.createElement('activity-window');
 const musicListWindow = document.createElement('music-list-window');
 const soundHint = document.createElement('sound-hint');
+const responsiveWindows = [
+  menuWindow,
+  menuListWindow,
+  activityWindow,
+  musicListWindow,
+];
+const updateResponsiveLayout = (value = isSmallScreen()) => {
+  for (const element of responsiveWindows) {
+    if (!element) {
+      continue;
+    }
+    if (value) {
+      element.setAttribute('data-compact', '');
+    } else {
+      element.removeAttribute('data-compact');
+    }
+  }
+};
+updateResponsiveLayout();
+subscribeSmallScreen(updateResponsiveLayout);
 let currentPoint = 'main';
 const musicAudio = new Audio();
 musicAudio.loop = true;
@@ -86,9 +107,7 @@ async function init() {
   menuWindow.addEventListener('navigate', (event) => {
     currentPoint = event.detail;
     goToPoint(event.detail);
-    if (currentPoint === 'activity') {
-      activityWindow.open();
-    } else {
+    if (currentPoint !== 'activity') {
       activityWindow.close();
     }
     if (currentPoint === 'music') {
@@ -122,6 +141,7 @@ async function init() {
     menuHoverModels.show(event.detail);
   });
   menuWindow.addEventListener('menu-hover-out', () => menuHoverModels.hide());
+  menuWindow.addEventListener('menu-activity-poster', () => activityWindow.open());
 
   if (defaultTrack) {
     const src = `${baseUrl}music/${defaultTrack.file}`;

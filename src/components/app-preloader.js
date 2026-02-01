@@ -29,6 +29,28 @@ template.innerHTML = `
       font-size: 12px;
     }
 
+    .logo {
+      width: min(220px, 60vw);
+      margin: 0 auto;
+      display: block;
+      animation: logoPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes logoPulse {
+      0% {
+        transform: scale(1);
+        opacity: 0.75;
+      }
+      50% {
+        transform: scale(1.04);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 0.75;
+      }
+    }
+
     .bar {
       height: 6px;
       border-radius: 999px;
@@ -50,6 +72,7 @@ template.innerHTML = `
     }
   </style>
   <div class="panel">
+    <img class="logo" src="${import.meta.env.BASE_URL ?? '/'}logo.png" alt="Iggy bar" />
     <div>Загрузка</div>
     <div class="bar">
       <div class="fill"></div>

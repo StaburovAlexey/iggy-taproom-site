@@ -3,6 +3,7 @@ import Stats from 'stats.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { goPoint } from './cameraPoint.js';
 import { createDust } from './dust.js';
+import { isSmallScreen, subscribeSmallScreen } from './utils/screen.js';
 
 export function createScene(container, models) {
   const { bar, lampBar, lampDj, lampTable, lampCenter, signLights } = models;
@@ -14,7 +15,7 @@ export function createScene(container, models) {
 
   const renderer = new THREE.WebGLRenderer({ antialias: false });
   renderer.setPixelRatio(1);
-  const renderScale = 0.55;
+  let renderScale = isSmallScreen() ? 0.8 : 0.55;
   function setRendererSize() {
     const width = Math.max(1, Math.floor(container.clientWidth * renderScale));
     const height = Math.max(
@@ -180,12 +181,19 @@ export function createScene(container, models) {
   scene.add(bar);
   const dust = createDust(scene);
 
+  const defaultFov = 55;
+  const compactFov = 80;
   const camera = new THREE.PerspectiveCamera(
-    55,
+    defaultFov,
     container.clientWidth / container.clientHeight,
     0.1,
     50,
   );
+  const applyCameraFov = (compact = isSmallScreen()) => {
+    camera.fov = compact ? compactFov : defaultFov;
+  };
+  applyCameraFov();
+  camera.updateProjectionMatrix();
   const controls = new OrbitControls(camera, renderer.domElement);
   const baseTarget = new THREE.Vector3();
   baseTarget.copy(controls.target);
@@ -201,11 +209,20 @@ export function createScene(container, models) {
     const width = container.clientWidth;
     const height = container.clientHeight;
     camera.aspect = width / height;
+    applyCameraFov();
     camera.updateProjectionMatrix();
+    renderScale = isSmallScreen() ? 0.8 : 0.55;
     setRendererSize();
   }
 
   window.addEventListener('resize', () => onResize());
+  subscribeSmallScreen((compact) => {
+    camera.aspect = container.clientWidth / container.clientHeight;
+    applyCameraFov(compact);
+    camera.updateProjectionMatrix();
+    renderScale = compact ? 0.8 : 0.55;
+    setRendererSize();
+  });
 
   function animate() {
     stats.begin();

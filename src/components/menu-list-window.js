@@ -201,6 +201,20 @@ template.innerHTML = `
       display: block;
     }
 
+    :host([data-compact]) {
+      transform: translate(-50%, -50%);
+    }
+
+    :host([data-compact]) {
+      top: 10px;
+      transform: translate(-50%, 0);
+      height: 30vh;
+    }
+
+    :host([data-compact]) .panel {
+      height: 100%;
+    }
+
     .panel {
       display: grid;
       gap: 12px;
@@ -323,7 +337,7 @@ template.innerHTML = `
   <div class="panel">
     <div class="header">
       <div class="title" data-title>Меню</div>
-      <button type="button" class="close" data-close>Назад</button>
+      <button type="button" class="close" data-close>Закрыть</button>
     </div>
     <div class="list" data-list></div>
   </div>

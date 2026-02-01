@@ -1,5 +1,6 @@
 import { Vector3 } from 'three';
 import { gsap } from 'gsap';
+import { isSmallScreen } from './utils/screen.js';
 
 export const pointCameraPosition = {
   main: {
@@ -8,34 +9,60 @@ export const pointCameraPosition = {
   },
 
   menu: {
-    position: { x: -2.4, y: 1.4, z: 0 },
-    target: { x: -3, y: 1.1, z: 0 },
-
+    position: { x: -2.2, y: 1.5, z: 0.6 },
+    target: { x: -3.5, y: 1.3, z: 0.7 },
   },
 
   beer: {
     position: { x: -2.4, y: 1.4, z: 0 },
     target: { x: -3, y: 1.6, z: 0 },
-
   },
+
   eat: {
     position: { x: -2.4, y: 1.4, z: 1 },
     target: { x: -3, y: 1.65, z: 1.2 },
- 
   },
+
   activity: {
     position: { x: 3.5, y: 1.8, z: 1.8 },
     target: { x: 0.5, y: 0, z: -1.4 },
-    // position: { x:-0.5, y: 2, z: 3.5 },
-    // target: { x: 2, y: 1, z: 1 },
   },
+
   music: {
     position: { x: 0, y: 1.8, z: 1.5 },
     target: { x: 4.5, y: 1, z: -1 },
   },
-  barmen: {
-    position: { x: -2.2, y: 1.5, z: 0.6 },
-    target: { x: -3.5, y: 1.3, z: 0.7 },
+};
+
+const compactPointCameraPosition = {
+  main: {
+    position: { x: -1, y: 2, z: 5.5 },
+    target: { x: -4, y: 1, z: 0 },
+  },
+
+  menu: {
+    position: { x: -2.2, y: 1.8, z: 0.6 },
+    target: { x: -3.2, y: 1, z: 0.7 },
+  },
+
+  beer: {
+    position: { x: -2.4, y: 1.4, z: 0 },
+    target: { x: -3, y: 1.6, z: 0 },
+  },
+
+  eat: {
+    position: { x: -2.4, y: 1.4, z: 1 },
+    target: { x: -3, y: 1.65, z: 1.2 },
+  },
+
+  activity: {
+    position: { x: 3.5, y: 1.8, z: 1.5 },
+    target: { x: 2, y: 0, z: -2 },
+  },
+
+  music: {
+    position: { x: -2.5, y: 1.8, z: 0 },
+    target: { x: 4.5, y: 1, z: 0 },
   },
 };
 
@@ -68,7 +95,10 @@ export function goPoint(
   namePosition,
   baseTarget = controls.target,
 ) {
-  const pointConfig = pointCameraPosition[namePosition];
+  const source = isSmallScreen()
+    ? compactPointCameraPosition
+    : pointCameraPosition;
+  const pointConfig = source[namePosition] ?? pointCameraPosition[namePosition];
   const target = pointConfig.target;
   const targetVector = new Vector3(target.x, target.y, target.z);
   const point = pointConfig.position;
